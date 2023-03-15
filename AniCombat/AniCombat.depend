@@ -1,0 +1,105 @@
+# depslib dependency file v1.0
+1678774861 source:e:\codeblock program\#ani - combat\gameheader.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+
+1678774861 e:\codeblock program\#ani - combat\gameheader.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+
+1678859061 source:e:\codeblock program\#ani - combat\background.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+	"background.h"
+
+1678860763 e:\codeblock program\#ani - combat\background.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+
+1678859596 source:e:\codeblock program\#ani - combat\maingame.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+	"background.h"
+	"character.h"
+
+1678862252 source:e:\codeblock program\#ani - combat\character.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"character.h"
+	"background.h"
+	"gameHeader.h"
+
+1678860788 e:\codeblock program\#ani - combat\character.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"background.h"
+
+1678859061 source:e:\codeblock program\anicombat\background.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+	"background.h"
+
+1678774861 e:\codeblock program\anicombat\gameheader.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+
+1678860763 e:\codeblock program\anicombat\background.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+
+1678863259 source:e:\codeblock program\anicombat\character.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"character.h"
+	"background.h"
+	"gameHeader.h"
+
+1678860788 e:\codeblock program\anicombat\character.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"background.h"
+
+1678774861 source:e:\codeblock program\anicombat\gameheader.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+
+1678859596 source:e:\codeblock program\anicombat\maingame.cpp
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+	"background.h"
+	"character.h"
+
