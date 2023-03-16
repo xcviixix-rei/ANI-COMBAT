@@ -20,17 +20,23 @@ class CRT{
 
         SDL_Texture* charMotion;
 
+        SDL_Texture* charIMG[10];
+
         Mix_Chunk* sfx;
 
         void initPosition(BG background);
+
+        void loadIMG(SDL_Renderer* renderer);
 
         void handleEvent( SDL_Event& e);
 
         void move( const int SCREEN_WIDTH, const int SCREEN_HEIGHT );
 
-        void render(SDL_Renderer* renderer);
+        void loadChar();
 
-        void loadChar(SDL_Renderer* renderer);
+        void render(SDL_Renderer* renderer, BG &background);
+
+        void renderSkill(SDL_Renderer* renderer, BG &background);
 
     private:
 
@@ -38,7 +44,10 @@ class CRT{
 
         string charStat;
 
-        int direction /* 1 la left, 2 la right */, condition;
+        int direction;
+        // 1 la left, 2 la right
+
+        bool skillCond;
 
         int frameNum, frameTime, sheetW;
 

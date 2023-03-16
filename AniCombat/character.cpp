@@ -20,6 +20,8 @@ CRT :: CRT()
 
     direction = 2;
 
+    skillCond = false;
+
     collider.w = char_width;
     collider.h = char_height;
 
@@ -32,7 +34,19 @@ CRT :: CRT()
 }
 
 void CRT :: initPosition(BG background){
-    charPos.y = background.groundPos.y - charPos.h + 12;
+    charPos.y = background.groundPos.y - charPos.h + 14;
+}
+
+void CRT :: loadIMG(SDL_Renderer* renderer){
+    charIMG[0] = loadTexture("character/Naruto/standLeft.png", renderer);
+    charIMG[1] = loadTexture("character/Naruto/standRight.png", renderer);
+    charIMG[2] = loadTexture("character/Naruto/runLeft.png", renderer);
+    charIMG[3] = loadTexture("character/Naruto/runRight.png", renderer);
+    charIMG[4] = loadTexture("character/Naruto/jumpLeft.png", renderer);
+    charIMG[5] = loadTexture("character/Naruto/jumpRight.png", renderer);
+    charIMG[6] = loadTexture("character/Naruto/normalAtkLeft.png", renderer);
+    charIMG[7] = loadTexture("character/Naruto/normalAtkRight.png", renderer);
+
 }
 
 void CRT :: handleEvent(SDL_Event &e)
@@ -52,6 +66,18 @@ void CRT :: handleEvent(SDL_Event &e)
                 veloX += char_velo;
                 direction = 2;
                 break;
+
+            case SDLK_w:
+                charStat = "jump";
+                charRect.x = 0;
+                veloY = - char_velo;
+                break;
+
+            case SDLK_j:
+                charRect.x = 0;
+                charStat = "normalAtk";
+                skillCond = true;
+                break;
         }
     }
 
@@ -67,6 +93,18 @@ void CRT :: handleEvent(SDL_Event &e)
             case SDLK_d:
                 veloX -= char_velo;
                 charRect.x = 0;
+                break;
+
+            case SDLK_w:
+                charStat.clear();
+                veloY = char_velo;
+                charRect.x = 0;
+                break;
+
+            case SDLK_j:
+                charStat.clear();
+                charRect.x = 0;
+                skillCond = false;
                 break;
         }
     }
@@ -86,58 +124,135 @@ void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
     charPos.y += veloY;
 	collider.y = charPos.y;
 
-    if( ( charPos.y < 0 ) || ( charPos.y + char_height > SCREEN_HEIGHT - 27 )  )
+    if( ( charPos.y < 0 ) || ( charPos.y + char_height > SCREEN_HEIGHT - 20)  )
     {
         charPos.y -= veloY;
 		collider.y = charPos.y;
+		charRect.x = 0;
 		veloY = 0;
     }
+
 }
 
-void CRT :: loadChar(SDL_Renderer* renderer)
+void CRT :: loadChar()
 {
     charMotion = NULL;
-    if( veloX == 0 && veloY == 0){
-        if(direction == 1){
-            charMotion = loadTexture("character/Naruto/standLeft.png", renderer);
-            SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
-            charRect.w = sheetW / 4;
+
+    if(charStat.empty()){
+        if( veloX == 0 && veloY == 0){
+            if(direction == 1){
+                charMotion = charIMG[0];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 4;
+            }
+            else if(direction == 2){
+                charMotion = charIMG[1];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 4;
+            }
         }
-        else if(direction == 2){
-            charMotion = loadTexture("character/Naruto/standRight.png", renderer);
-            SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
-            charRect.w = sheetW / 4;
+        else if(veloX != 0 && veloY == 0){
+            if(veloX < 0){
+                charMotion = charIMG[2];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 8;
+            }
+            else if(veloX > 0){
+                charMotion = charIMG[3];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 8;
+            }
+        }
+        else if(veloY != 0){
+            if(direction == 1){
+                charMotion = charIMG[4];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 8;
+            }
+            else if(direction == 2){
+                charMotion = charIMG[5];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 8;
+            }
         }
     }
-    else if(veloX != 0 && veloY == 0){
-        if(veloX < 0){
-            charMotion = loadTexture("character/Naruto/runLeft.png", renderer);
-            SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
-            charRect.w = sheetW / 8;
-        }
-        else if(veloX > 0){
-            charMotion = loadTexture("character/Naruto/runRight.png", renderer);
-            SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
-            charRect.w = sheetW / 8;
+    else if(!charStat.empty()){
+        if(charStat == "normalAtk"){
+            if(direction == 1){
+                charMotion = charIMG[6];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 4;
+            }
+            else if(direction == 2){
+                charMotion = charIMG[7];
+                SDL_QueryTexture(charMotion, NULL, NULL, &sheetW, &charRect.h );
+                charRect.w = sheetW / 4;
+            }
         }
     }
 }
 
-void CRT::render(SDL_Renderer* renderer)
-{
-    loadChar(renderer);
-
-    SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-
-    if(frameTime == 10){
-        charRect.x += charRect.w;
-        if(charRect.x > sheetW - charRect.w){
-            charRect.x = 0;
+void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
+    if(charStat == "normalAtk" ){
+        while(skillCond){
+            SDL_RenderClear(renderer);
+            background.render(renderer);
+            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+            SDL_RenderPresent(renderer);
+            if(frameTime == 10){
+                charRect.x += charRect.w;
+                if(charRect.x > sheetW - charRect.w){
+                    charRect.x = 0;
+                    skillCond = false;
+                }
+                frameTime = 0;
+            }
+            frameTime ++;
         }
-        frameTime = 0;
+        charStat.clear();
     }
-    if(veloX == 0 && veloY == 0) SDL_Delay(10);
-    frameTime ++;
+    else if(charStat == "jump" ){
+        while(skillCond){
+            SDL_RenderClear(renderer);
+            background.render(renderer);
+            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+            SDL_RenderPresent(renderer);
+            if(frameTime == 10){
+                charRect.x += charRect.w;
+                if(charRect.x > sheetW - charRect.w){
+                    charRect.x = 0;
+                    skillCond = false;
+                }
+                frameTime = 0;
+            }
+            frameTime ++;
+        }
+        charStat.clear();
+    }
+}
+
+void CRT :: render(SDL_Renderer* renderer, BG &background)
+{
+    loadChar();
+
+    if(charStat.empty()){
+        SDL_RenderClear(renderer);
+        background.render(renderer);
+        SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        SDL_RenderPresent(renderer);
+        if(frameTime == 10){
+            charRect.x += charRect.w;
+            if(charRect.x > sheetW - charRect.w){
+                charRect.x = 0;
+            }
+            frameTime = 0;
+        }
+        SDL_Delay(10);
+        frameTime ++;
+    }
+    else if(!charStat.empty()){
+        renderSkill(renderer, background);
+    }
 }
 
 bool checkCollision( SDL_Rect a, SDL_Rect b)

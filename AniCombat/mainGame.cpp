@@ -23,6 +23,7 @@ int main(int argc, char* argv[]){
 
     CRT character;
     character.initPosition(background);
+    character.loadIMG(renderer);
 
     SDL_Event e;
 
@@ -37,10 +38,7 @@ int main(int argc, char* argv[]){
         }
         character.move(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        SDL_RenderClear(renderer);
-        background.render(renderer);
-        character.render(renderer);
-        SDL_RenderPresent(renderer);
+        character.render(renderer, background);
 
     }
     quitSDL(window, renderer);
