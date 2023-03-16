@@ -36,9 +36,9 @@ class CRT{
 
         Uint32 startTime;
 
-        string charStat, skill;
+        string charStat;
 
-        int leftRight /* 1 la left, 2 la right */, condition;
+        int direction /* 1 la left, 2 la right */, condition;
 
         int frameNum, frameTime, sheetW;
 
