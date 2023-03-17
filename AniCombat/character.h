@@ -13,6 +13,7 @@ class CRT{
         static const int char_width = 80;
         static const int char_height = 96;
         static const int char_velo = 4;
+        static const int jumpHeightMax = 125;
 
         CRT();
 
@@ -49,9 +50,13 @@ class CRT{
 
         bool skillCond;
 
-        int frameNum, frameTime, sheetW;
+        int frameNum, frameTime;
+
+        vector <int> sheetW, sheetH;
+        int w, h;
 
         int veloX, veloY;
+        int jumpCurrentHeight;
 
         SDL_Texture* charTexture;
 
