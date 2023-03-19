@@ -126,7 +126,7 @@ void CRT :: handleEvent(SDL_Event &e)
     }
 }
 
-void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
+void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background)
 {
     charPos.x += veloX;
 	collider.x = charPos.x;
@@ -138,16 +138,15 @@ void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
     }
 
     charPos.y += veloY;
-    jumpCurrentHeight += veloY;
 	collider.y = charPos.y;
 
-    if(  charPos.y < 0 || ( charPos.y + char_height > SCREEN_HEIGHT - 20) || abs(jumpCurrentHeight) > jumpHeightMax )
+    if(  charPos.y < 0 || ( charPos.y > background.groundPos.y - charPos.h + 14)  )
     {
         charPos.y -= veloY;
 		collider.y = charPos.y;
 		charRect.x = 0;
 		veloY = 0;
-        if(charPos.y < 0 || abs(jumpCurrentHeight) > jumpHeightMax){
+        if(charPos.y < 0 ){
            veloY = 0.8 * char_velo;
         }
     }

@@ -13,7 +13,6 @@ class CRT{
         static const int char_width = 80;
         static const int char_height = 96;
         static const int char_velo = 3;
-        static const int jumpHeightMax = 125;
 
         CRT();
 
@@ -31,7 +30,7 @@ class CRT{
 
         void handleEvent( SDL_Event& e);
 
-        void move( const int SCREEN_WIDTH, const int SCREEN_HEIGHT );
+        void move( const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background );
 
         void loadChar();
 
