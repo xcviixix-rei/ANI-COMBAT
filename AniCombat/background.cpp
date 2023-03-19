@@ -20,6 +20,7 @@ BG :: BG(){
             Mix_ResumeMusic();
         }
     }
+    cloudTime = 0;
 }
 
 void BG :: loadBG(SDL_Renderer* renderer){
@@ -54,7 +55,7 @@ void BG :: loadBG(SDL_Renderer* renderer){
     cloudPos.y = 100;
 }
 
-void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos, int cloudVelo, int screenW){
+void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos, int cloudVelo, int screenW, int &cloudTime){
     SDL_Rect cloudPos1, cloudPos2;
 
     cloudPos1.w = cloudPos2.w = screenW;
@@ -66,7 +67,11 @@ void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos,
     SDL_RenderCopy(renderer, cloud, NULL, &cloudPos1);
     SDL_RenderCopy(renderer, cloud, NULL, &cloudPos2);
 
-    cloudPos.x += cloudVelo;
+    if(cloudTime == 3){
+        cloudPos.x += cloudVelo;
+        cloudTime = 0;
+    }
+    cloudTime ++;
     if(cloudPos.x > screenW){
         cloudPos.x = 0;
     }
@@ -74,7 +79,7 @@ void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos,
 
 void BG :: render(SDL_Renderer* renderer){
     SDL_RenderCopy(renderer, background, NULL, NULL);
-    renderCloud(renderer, cloud, cloudPos, cloudVelo, screenW);
+    renderCloud(renderer, cloud, cloudPos, cloudVelo, screenW, cloudTime);
     SDL_RenderCopy(renderer, stage, NULL, &stagePos);
     SDL_RenderCopy(renderer, ground, NULL, &groundPos);
 }

@@ -2,19 +2,20 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="background.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="637" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="mainGame.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="966" topLine="19" />
+			<Cursor1 position="966" topLine="5" />
 		</Cursor>
 	</File>
-	<File name="gameHeader.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="character.cpp" open="1" top="0" tabpos="7" split="2" active="1" splitpos="953" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1809" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="character.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="953" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3885" topLine="128" />
+			<Cursor1 position="2650" topLine="92" />
+			<Cursor2 position="3598" topLine="130" />
 		</Cursor>
 	</File>
 	<File name="gameHeader.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -24,17 +25,17 @@
 	</File>
 	<File name="character.h" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="426" topLine="3" />
+			<Cursor1 position="309" topLine="12" />
 		</Cursor>
 	</File>
-	<File name="background.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="gameHeader.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="130" topLine="4" />
+			<Cursor1 position="1809" topLine="2" />
 		</Cursor>
 	</File>
 	<File name="background.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2376" topLine="31" />
+			<Cursor1 position="2061" topLine="46" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

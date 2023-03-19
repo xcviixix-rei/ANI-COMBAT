@@ -86,7 +86,7 @@ void CRT :: handleEvent(SDL_Event &e)
             case SDLK_w:
                 charStat = "jump";
                 charRect.x = 0;
-                veloY = - 1.25 * char_velo;
+                veloY = - 0.8 * char_velo;
                 break;
 
             case SDLK_j:
@@ -113,7 +113,7 @@ void CRT :: handleEvent(SDL_Event &e)
 
             case SDLK_w:
                 charStat.clear();
-                veloY = 1.25 * char_velo;
+                veloY = 0.8 * char_velo;
                 charRect.x = 0;
                 break;
 
@@ -148,7 +148,7 @@ void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT)
 		charRect.x = 0;
 		veloY = 0;
         if(charPos.y < 0 || abs(jumpCurrentHeight) > jumpHeightMax){
-           veloY = 1.25 * char_velo;
+           veloY = 0.8 * char_velo;
         }
     }
 
@@ -214,6 +214,7 @@ void CRT :: loadChar()
 
 void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
     if(charStat == "normalAtk" ){
+        charPos.w = 85;
         while(skillCond){
             SDL_RenderClear(renderer);
             background.render(renderer);
@@ -221,15 +222,17 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
             SDL_RenderPresent(renderer);
             if(frameTime == 10){
                 charRect.x += charRect.w;
-                if(charRect.x > sheetW[3] - charRect.w){
-                    charRect.x = 0;
-                    skillCond = false;
-                }
                 frameTime = 0;
+            }
+            if(charRect.x > sheetW[3] - charRect.w){
+                charRect.x = 0;
+                skillCond = false;
             }
             frameTime ++;
         }
         charStat.clear();
+        charPos.w = 70;
+        frameTime = 0;
     }
     else if(charStat == "jump" ){
         while(skillCond){
@@ -239,15 +242,16 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
             SDL_RenderPresent(renderer);
             if(frameTime == 10){
                 charRect.x += charRect.w;
-                if(charRect.x > sheetW[2] - charRect.w){
-                    charRect.x = 0;
-                    skillCond = false;
-                }
                 frameTime = 0;
+            }
+            if(charRect.x > sheetW[2] - charRect.w){
+                charRect.x = 0;
+                skillCond = false;
             }
             frameTime ++;
         }
         charStat.clear();
+        frameTime = 0;
     }
 }
 
@@ -262,17 +266,17 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         SDL_RenderPresent(renderer);
         if(veloX == 0) w = sheetW[0];
         else if(veloX != 0) w = sheetW[1];
-        if(frameTime == 10){
+        if(frameTime == 15){
             charRect.x += charRect.w;
-            if(charRect.x > w - charRect.w){
-                charRect.x = 0;
-            }
             frameTime = 0;
         }
-        SDL_Delay(10);
+        if(charRect.x > w - charRect.w){
+            charRect.x = 0;
+        }
         frameTime ++;
     }
     else if(!charStat.empty()){
+        frameTime = 0;
         renderSkill(renderer, background);
     }
 }
