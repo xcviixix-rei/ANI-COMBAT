@@ -16,7 +16,7 @@ class CRT{
 
         CRT();
 
-        SDL_Rect collider, charRect, charPos;
+        SDL_Rect charRect, charPos;
 
         SDL_Texture* charMotion;
 

@@ -6,6 +6,9 @@
 #include "background.h"
 #include "gameHeader.h"
 
+#define cend(a) cout << a << endl
+#define twocend(a,b) cout << a << " : " << b << endl
+
 using namespace std;
 
 CRT :: CRT()
@@ -21,21 +24,18 @@ CRT :: CRT()
 
     skillCond = false;
 
-    collider.w = char_width;
-    collider.h = char_height;
-
     w = h =0;
 
     veloX = 0;
     veloY = 0;
 
-    charPos.w = 70;
-    charPos.h = 84;
+    charPos.w = char_width;
+    charPos.h = char_height;
     charPos.x = 50;
 }
 
 void CRT :: initPosition(BG background){
-    charPos.y = background.groundPos.y - charPos.h + 14;
+    charPos.y = background.groundPos.y - charPos.h + 16;
 }
 
 void CRT :: loadIMG(SDL_Renderer* renderer){
@@ -84,7 +84,6 @@ void CRT :: handleEvent(SDL_Event &e)
                 break;
 
             case SDLK_w:
-                charStat = "jump";
                 charRect.x = 0;
                 veloY = - 0.8 * char_velo;
                 break;
@@ -112,7 +111,6 @@ void CRT :: handleEvent(SDL_Event &e)
                 break;
 
             case SDLK_w:
-                charStat.clear();
                 veloY = 0.8 * char_velo;
                 charRect.x = 0;
                 break;
@@ -129,21 +127,17 @@ void CRT :: handleEvent(SDL_Event &e)
 void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background)
 {
     charPos.x += veloX;
-	collider.x = charPos.x;
 
     if( ( charPos.x < 0 ) || ( charPos.x + char_width > SCREEN_WIDTH ) )
     {
         charPos.x -= veloX;
-		collider.x = charPos.x;
     }
 
     charPos.y += veloY;
-	collider.y = charPos.y;
 
-    if(  charPos.y < 0 || ( charPos.y > background.groundPos.y - charPos.h + 14)  )
+    if(  charPos.y < 0 || ( charPos.y > background.groundPos.y - charPos.h + 16)  )
     {
         charPos.y -= veloY;
-		collider.y = charPos.y;
 		charRect.x = 0;
 		veloY = 0;
         if(charPos.y < 0 ){
@@ -213,7 +207,7 @@ void CRT :: loadChar()
 
 void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
     if(charStat == "normalAtk" ){
-        charPos.w = 85;
+        charPos.w = 80;
         while(skillCond){
             SDL_RenderClear(renderer);
             background.render(renderer);
@@ -259,20 +253,49 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
     loadChar();
 
     if(charStat.empty()){
-        SDL_RenderClear(renderer);
-        background.render(renderer);
-        SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-        SDL_RenderPresent(renderer);
-        if(veloX == 0) w = sheetW[0];
-        else if(veloX != 0) w = sheetW[1];
-        if(frameTime == 15){
-            charRect.x += charRect.w;
-            frameTime = 0;
+        if(veloY == 0){
+            SDL_RenderClear(renderer);
+            background.render(renderer);
+            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+            SDL_RenderPresent(renderer);
+            if(veloX == 0) w = sheetW[0];
+            else if(veloX != 0) w = sheetW[1];
+            if(frameTime == 13){
+                charRect.x += charRect.w;
+                frameTime = 0;
+            }
+            if(charRect.x >= w){
+                charRect.x = 0;
+            }
+            frameTime ++;
+            jumpCurrentHeight = charPos.y;
         }
-        if(charRect.x > w - charRect.w){
-            charRect.x = 0;
+        else if(veloY != 0){
+            if( (charPos.y == jumpCurrentHeight - 2) && veloY < 0){
+                charRect.x = 0;
+                for(int i = 0; i < 10; i++){
+                    SDL_RenderClear(renderer);
+                    background.render(renderer);
+                    SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+                    SDL_RenderPresent(renderer);
+                }
+                charRect.x = charRect.w;
+            }
+            else if( (charPos.y < jumpCurrentHeight - 2) && veloY < 0){
+                SDL_RenderClear(renderer);
+                background.render(renderer);
+                SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+                SDL_RenderPresent(renderer);
+                if(frameTime = 10){
+                    charRect.x += charRect.w;
+                    frameTime = 0;
+                }
+                if(charRect.x > 2 * charRect.w){
+                    charRect.x = charRect.w;
+                }
+                frameTime++;
+            }
         }
-        frameTime ++;
     }
     else if(!charStat.empty()){
         frameTime = 0;
