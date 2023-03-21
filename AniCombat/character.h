@@ -49,7 +49,7 @@ class CRT{
 
         bool skillCond;
 
-        int frameNum, frameTime;
+        int frameTime;
 
         vector <int> sheetW, sheetH;
         int w, h;

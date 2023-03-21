@@ -16,7 +16,6 @@ CRT :: CRT()
     startTime = 0;
 
     frameTime = 0;
-    frameNum = 0;
 
     charRect.x = charRect.y = 0;
 
@@ -85,7 +84,7 @@ void CRT :: handleEvent(SDL_Event &e)
 
             case SDLK_w:
                 charRect.x = 0;
-                veloY = - 0.8 * char_velo;
+                veloY = - char_velo;
                 break;
 
             case SDLK_j:
@@ -111,7 +110,7 @@ void CRT :: handleEvent(SDL_Event &e)
                 break;
 
             case SDLK_w:
-                veloY = 0.8 * char_velo;
+                veloY = char_velo;
                 charRect.x = 0;
                 break;
 
@@ -141,7 +140,7 @@ void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background
 		charRect.x = 0;
 		veloY = 0;
         if(charPos.y < 0 ){
-           veloY = 0.8 * char_velo;
+           veloY = char_velo;
         }
     }
 
@@ -227,25 +226,6 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
         charPos.w = 70;
         frameTime = 0;
     }
-    else if(charStat == "jump" ){
-        while(skillCond){
-            SDL_RenderClear(renderer);
-            background.render(renderer);
-            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-            SDL_RenderPresent(renderer);
-            if(frameTime == 10){
-                charRect.x += charRect.w;
-                frameTime = 0;
-            }
-            if(charRect.x > sheetW[2] - charRect.w){
-                charRect.x = 0;
-                skillCond = false;
-            }
-            frameTime ++;
-        }
-        charStat.clear();
-        frameTime = 0;
-    }
 }
 
 void CRT :: render(SDL_Renderer* renderer, BG &background)
@@ -271,7 +251,7 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
             jumpCurrentHeight = charPos.y;
         }
         else if(veloY != 0){
-            if( (charPos.y == jumpCurrentHeight - 2) && veloY < 0){
+            if( (charPos.y == jumpCurrentHeight - char_velo) && veloY < 0){
                 charRect.x = 0;
                 for(int i = 0; i < 10; i++){
                     SDL_RenderClear(renderer);
@@ -280,13 +260,14 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
                     SDL_RenderPresent(renderer);
                 }
                 charRect.x = charRect.w;
+                frameTime = 0;
             }
-            else if( (charPos.y < jumpCurrentHeight - 2) && veloY < 0){
+            else if((charPos.y < jumpCurrentHeight - char_velo) && veloY < 0){
                 SDL_RenderClear(renderer);
                 background.render(renderer);
                 SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
                 SDL_RenderPresent(renderer);
-                if(frameTime = 10){
+                if(frameTime == 10){
                     charRect.x += charRect.w;
                     frameTime = 0;
                 }
@@ -294,6 +275,48 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
                     charRect.x = charRect.w;
                 }
                 frameTime++;
+            }
+            else if((charPos.y < jumpCurrentHeight - char_velo) && veloY == 0){
+                charRect.x = 3 * charRect.w;
+                frameTime = 0;
+            }
+            else if((charPos.y < jumpCurrentHeight - char_velo) && veloY > 0){
+                SDL_RenderClear(renderer);
+                background.render(renderer);
+                SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+                SDL_RenderPresent(renderer);
+                if(frameTime == 10){
+                    charRect.x += charRect.w;
+                    frameTime = 0;
+                }
+                if(charRect.x > 4 * charRect.w){
+                    charRect.x = 3 * charRect.w;
+                }
+                frameTime++;
+            }
+            else if( (charPos.y == jumpCurrentHeight - char_velo) && veloY > 0){
+                charRect.x = 5 * charRect.w;
+                frameTime = 0;
+                skillCond = true;
+                while(skillCond){
+                    charPos.y = jumpCurrentHeight + 10;
+                    SDL_RenderClear(renderer);
+                    background.render(renderer);
+                    SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+                    SDL_RenderPresent(renderer);
+                    if(frameTime == 10){
+                        charRect.x += charRect.w;
+                        frameTime = 0;
+                    }
+                    if(charRect.x > 7 * charRect.w){
+                        charRect.x = 0;
+                        skillCond = false;
+                    }
+                    frameTime++;
+                }
+                charRect.x = charRect.w;
+                frameTime = 0;
+                charPos.y = jumpCurrentHeight;
             }
         }
     }
