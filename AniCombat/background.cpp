@@ -55,7 +55,7 @@ void BG :: loadBG(SDL_Renderer* renderer){
     cloudPos.y = 100;
 }
 
-void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos, int cloudVelo, int screenW, int &cloudTime){
+void BG :: renderCloud(SDL_Renderer* renderer){
     SDL_Rect cloudPos1, cloudPos2;
 
     cloudPos1.w = cloudPos2.w = screenW;
@@ -79,7 +79,7 @@ void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos,
 
 void BG :: render(SDL_Renderer* renderer){
     SDL_RenderCopy(renderer, background, NULL, NULL);
-    renderCloud(renderer, cloud, cloudPos, cloudVelo, screenW, cloudTime);
+    renderCloud(renderer);
     SDL_RenderCopy(renderer, stage, NULL, &stagePos);
     SDL_RenderCopy(renderer, ground, NULL, &groundPos);
 }

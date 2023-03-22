@@ -130,9 +130,6 @@ void CRT :: handleEvent(SDL_Event &e)
                 veloX -= char_velo;
                 break;
 
-            case SDLK_w:
-                break;
-
             case SDLK_j:
                 if(charPos.y == jumpCurrentHeight){
                     charStat = "stand";
@@ -190,14 +187,12 @@ void CRT :: loadChar()
             charRect.w = sheetW[1] / 8;
             charRect.h = sheetH[1];
             direction = 1;
-            cend("yessss");
         }
         else if(veloX > 0){
             charMotion = charIMG[3];
             charRect.w = sheetW[1] / 8;
             charRect.h = sheetH[1];
             direction = 2;
-            cend("nooo");
         }
     }
     if(charStat == "jump" && skillCond){
@@ -285,8 +280,9 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         }
         frameTime ++;
         jumpCurrentHeight = charPos.y;
+        if(veloX == 0) charStat = "stand";
     }
-    else if(charStat == "jump" && skillCond){
+    else if(charStat == "jump" && skillCond || veloY != 0){
         if( (charPos.y == jumpCurrentHeight - char_velo) && veloY < 0){
             charRect.x = 0;
             for(int i = 0; i < 10; i++){
@@ -313,14 +309,21 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
             frameTime++;
         }
         else if((charPos.y < jumpCurrentHeight - char_velo) && veloY == 0){
+            if(direction == 1) charPos.x += 12;
+            else if(direction == 2) charPos.x -= 12;
             charRect.x = 3 * charRect.w;
             SDL_RenderClear(renderer);
             background.render(renderer);
             SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
             SDL_RenderPresent(renderer);
             frameTime = 0;
+            if(direction == 1) charPos.x -= 12;
+            else if(direction == 2) charPos.x += 12;
         }
         else if((charPos.y < jumpCurrentHeight - char_velo) && veloY > 0){
+            if(direction == 1) charPos.x += 12;
+            else if(direction == 2) charPos.x -= 12;
+
             SDL_RenderClear(renderer);
             background.render(renderer);
             SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
@@ -333,6 +336,8 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
                 charRect.x = 3 * charRect.w;
             }
             frameTime++;
+            if(direction == 1) charPos.x -= 12;
+            else if(direction == 2) charPos.x += 12;
         }
         else if( (charPos.y == jumpCurrentHeight - char_velo) && veloY > 0){
             charRect.x = 5 * charRect.w;
@@ -353,12 +358,12 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
                     jumpCond = false;
                     skillCond = false;
                     frameTime = 0;
+                    charPos.y = jumpCurrentHeight;
                 }
                 frameTime++;
             }
             charRect.x = 0;
             frameTime = 0;
-            charPos.y = jumpCurrentHeight;
             charStat = "stand";
         }
     }

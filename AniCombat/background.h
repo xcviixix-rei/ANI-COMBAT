@@ -16,6 +16,7 @@ class BG{
 
         void loadBG(SDL_Renderer* renderer);
 
+        void renderCloud(SDL_Renderer* renderer);
         void render(SDL_Renderer* renderer);
 
         SDL_Rect groundPos, stagePos, cloudPos;
@@ -29,5 +30,3 @@ class BG{
         int cloudTime;
 
 };
-
-void renderCloud(SDL_Renderer* renderer, SDL_Texture* cloud, SDL_Rect &cloudPos, int cloudVelo, int screenW);
