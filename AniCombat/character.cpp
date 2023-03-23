@@ -241,7 +241,6 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
         }
         charStat = "stand";
         charPos.w = char_width;
-        charPos.h = char_height;
         frameTime = 0;
         startTime = SDL_GetTicks();
     }
