@@ -36,7 +36,7 @@ int main(int argc, char* argv[]){
             }
             character.handleEvent(e);
         }
-        character.move(SCREEN_WIDTH, SCREEN_HEIGHT, background);
+        character.move(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, background);
 
         character.render(renderer, background);
 

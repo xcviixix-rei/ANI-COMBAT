@@ -30,13 +30,15 @@ class CRT{
 
         void handleEvent( SDL_Event& e);
 
-        void move( const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background );
+        void move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background );
 
         void loadChar();
 
         void render(SDL_Renderer* renderer, BG &background);
 
         void renderSkill(SDL_Renderer* renderer, BG &background);
+
+        void checkJumpPlace(SDL_Renderer* renderer, BG &background);
 
     private:
 

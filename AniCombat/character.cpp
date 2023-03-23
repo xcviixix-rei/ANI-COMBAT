@@ -141,7 +141,7 @@ void CRT :: handleEvent(SDL_Event &e)
     }
 }
 
-void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background)
+void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background)
 {
     charPos.x += veloX;
 
@@ -151,7 +151,7 @@ void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background
     }
     charPos.y += veloY;
 
-    if(jumpTime == 20){
+    if(jumpTime == 25){
         veloY += 2;
         jumpTime = 0;
     }
@@ -163,6 +163,8 @@ void CRT :: move(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background
         veloY = 0;
         jumpTime = 0;
     }
+
+    checkJumpPlace(renderer, background);
 }
 
 void CRT :: loadChar()
@@ -372,6 +374,43 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
     }
 }
 
+void CRT :: checkJumpPlace(SDL_Renderer* renderer, BG& background)
+{
+    twocend(charPos.y + char_height, background.jumpPlacePos[1].y);
+
+    if( (charPos.y + char_height == background.jumpPlacePos[0].y) && (charPos.x >= background.jumpPlacePos[0].x) && (charPos.x + charPos.w <= background.jumpPlacePos[0].x + background.jumpPlacePos[0].w)){
+        veloY = 0;
+        charStat = "stand";
+        skillCond = false;
+        charRect.x = 0;
+    }
+    if( (charPos.y + char_height == background.jumpPlacePos[1].y) && (charPos.x + charPos.w <= background.jumpPlacePos[1].x + background.jumpPlacePos[1].w)){
+        veloY = 0;
+        charStat = "stand";
+        skillCond = false;
+        charRect.x = 0;
+    }
+    if( (charPos.y + char_height == background.jumpPlacePos[2].y) && (charPos.x >= background.jumpPlacePos[2].x)){
+        veloY = 0;
+        charStat = "stand";
+        skillCond = false;
+        charRect.x = 0;
+    }
+    if( (charPos.y + char_height == background.jumpPlacePos[3].y) && (charPos.x + charPos.w <= background.jumpPlacePos[3].x + background.jumpPlacePos[3].w)){
+        veloY = 0;
+        charStat = "stand";
+        skillCond = false;
+        charRect.x = 0;
+    }
+    if( (charPos.y + char_height == background.jumpPlacePos[4].y) && (charPos.x >= background.jumpPlacePos[4].x) ){
+        veloY = 0;
+        charStat = "stand";
+        skillCond = false;
+        charRect.x = 0;
+    }
+}
+
+/*
 bool checkCollision( SDL_Rect a, SDL_Rect b)
 {
     int leftA, leftB;
@@ -411,4 +450,4 @@ bool checkCollision( SDL_Rect a, SDL_Rect b)
 
     return true;
 }
-
+*/

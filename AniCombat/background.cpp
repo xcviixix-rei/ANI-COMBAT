@@ -31,11 +31,11 @@ void BG :: loadBG(SDL_Renderer* renderer){
     ground = loadTexture("background/ground.png", renderer);
     stage = loadTexture("background/stage.png", renderer);
     cloud = loadTexture("background/cloud.png", renderer);
-    for(int i = 0; i < 5; i++){
-        char x = i + 48;
-        string path =  pathFirst + x + pathLast;
-        jump[i] = loadTexture(path, renderer);
-    }
+    jump[0] = loadTexture("background/jumpPlace/0.png", renderer);
+    jump[1] = loadTexture("background/jumpPlace/1.png", renderer);
+    jump[2] = loadTexture("background/jumpPlace/2.png", renderer);
+    jump[3] = loadTexture("background/jumpPlace/1.png", renderer);
+    jump[4] = loadTexture("background/jumpPlace/2.png", renderer);
 
     SDL_QueryTexture(stage, NULL, NULL, &stagePos.w, &stagePos.h);
     rate = screenW / stagePos.w;
@@ -53,6 +53,27 @@ void BG :: loadBG(SDL_Renderer* renderer){
     cloudPos.h = 175;
     cloudPos.x = 0;
     cloudPos.y = 100;
+
+    SDL_QueryTexture(jump[0],NULL, NULL, NULL, &jumpPlacePos[0].h);
+    jumpPlacePos[0].w = 560;
+    jumpPlacePos[0].x = (screenW - jumpPlacePos[0].w) / 2;
+    jumpPlacePos[0].y = 420;
+
+    SDL_QueryTexture(jump[1],NULL, NULL, NULL, &jumpPlacePos[1].h);
+    jumpPlacePos[1].w = 120;
+    jumpPlacePos[1].x = 0;
+    jumpPlacePos[1].y = 534;
+
+    jumpPlacePos[2] = jumpPlacePos[1];
+    jumpPlacePos[2].x = screenW - jumpPlacePos[2].w;
+
+    SDL_QueryTexture(jump[3],NULL, NULL, NULL, &jumpPlacePos[3].h);
+    jumpPlacePos[3].w = 120;
+    jumpPlacePos[3].x = 0;
+    jumpPlacePos[3].y = 320;
+
+    jumpPlacePos[4] = jumpPlacePos[3];
+    jumpPlacePos[4].x = screenW - jumpPlacePos[4].w;
 }
 
 void BG :: renderCloud(SDL_Renderer* renderer){
@@ -77,9 +98,19 @@ void BG :: renderCloud(SDL_Renderer* renderer){
     }
 }
 
+void BG :: renderJumpPlace(SDL_Renderer* renderer)
+{
+    SDL_RenderCopy(renderer, jump[0], NULL, &jumpPlacePos[0]);
+    SDL_RenderCopy(renderer, jump[1], NULL, &jumpPlacePos[1]);
+    SDL_RenderCopy(renderer, jump[2], NULL, &jumpPlacePos[2]);
+    SDL_RenderCopy(renderer, jump[3], NULL, &jumpPlacePos[3]);
+    SDL_RenderCopy(renderer, jump[4], NULL, &jumpPlacePos[4]);
+}
+
 void BG :: render(SDL_Renderer* renderer){
     SDL_RenderCopy(renderer, background, NULL, NULL);
     renderCloud(renderer);
     SDL_RenderCopy(renderer, stage, NULL, &stagePos);
     SDL_RenderCopy(renderer, ground, NULL, &groundPos);
+    renderJumpPlace(renderer);
 }
