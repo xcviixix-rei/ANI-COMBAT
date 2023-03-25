@@ -138,7 +138,7 @@ void CRT :: handleEvent(SDL_Event &e)
 
             case SDLK_j:
                 if(charPos.y == jumpCurrentHeight){
-                    charStat = "stand";
+                    //charStat = "stand";
                     charRect.x = 0;
                     skillCond = false;
                 }
@@ -150,7 +150,6 @@ void CRT :: handleEvent(SDL_Event &e)
 void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background)
 {
     charPos.x += veloX;
-    if(veloX != 0 && charPos.y == jumpCurrentHeight && veloY == 0) charStat = "run";
 
     if( ( charPos.x < 0 ) || ( charPos.x + char_width > SCREEN_WIDTH ) )
     {
@@ -159,11 +158,7 @@ void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCRE
     charPos.y += veloY;
 
     if(charPos.y < jumpCurrentHeight){
-        if(veloY <= 0)
-        {
-            charStat = "jumpUp";
-        }
-        else if(veloY > 0)
+        if(veloY > 0)
         {
             charStat = "fallDown";
         }
@@ -271,7 +266,11 @@ void CRT :: loadChar()
 
 void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
     if(charStat == "normalAtk" ){
-        charPos.w = 87;
+        charPos.w = 90;
+        charPos.h = 93;
+        if(direction == 1){
+            charPos.x -= 8;
+        }
         while(skillCond){
             SDL_RenderClear(renderer);
             background.render(renderer);
@@ -288,8 +287,12 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
             frameTime ++;
 
         }
+        if(direction == 1){
+            charPos.x += 8;
+        }
         charStat = "stand";
         charPos.w = char_width;
+        charPos.h = char_height;
         frameTime = 0;
         startTime = SDL_GetTicks();
     }
@@ -373,28 +376,28 @@ void CRT :: checkJumpPlace(SDL_Renderer* renderer, BG& background)
             charPos.y = background.jumpPlacePos[4].y - char_height + 14;
         }
     }
-    else if( (charPos.y + char_height >= background.jumpPlacePos[3].y + 12) && (charPos.y + char_height <= background.jumpPlacePos[3].y + 16) && (charPos.x <= background.jumpPlacePos[3].w - 30) ){
+    else if( (charPos.y + char_height >= background.jumpPlacePos[3].y + 10) && (charPos.y + char_height <= background.jumpPlacePos[3].y + 18) && (charPos.x <= background.jumpPlacePos[3].w - 30) ){
         if(veloY > 0){
             veloY = 0;
             jumpTime = 0;
             charPos.y = background.jumpPlacePos[3].y - char_height + 14;
         }
     }
-    else if( (charPos.y + char_height >= background.jumpPlacePos[2].y + 12) && (charPos.y + char_height <= background.jumpPlacePos[2].y + 16) && (charPos.x >= background.jumpPlacePos[2].x - 50) ){
+    else if( (charPos.y + char_height >= background.jumpPlacePos[2].y + 10) && (charPos.y + char_height <= background.jumpPlacePos[2].y + 18) && (charPos.x >= background.jumpPlacePos[2].x - 50) ){
         if(veloY > 0){
             veloY = 0;
             jumpTime = 0;
             charPos.y = background.jumpPlacePos[2].y - char_height + 14;
         }
     }
-    else if( (charPos.y + char_height >= background.jumpPlacePos[1].y + 12) && (charPos.y + char_height <= background.jumpPlacePos[1].y + 16) && (charPos.x <= background.jumpPlacePos[1].w - 30) ){
+    else if( (charPos.y + char_height >= background.jumpPlacePos[1].y + 10) && (charPos.y + char_height <= background.jumpPlacePos[1].y + 18) && (charPos.x <= background.jumpPlacePos[1].w - 30) ){
         if(veloY > 0){
             veloY = 0;
             jumpTime = 0;
             charPos.y = background.jumpPlacePos[1].y - char_height + 14;
         }
     }
-    else if( (charPos.y + char_height >= background.jumpPlacePos[0].y + 12) && (charPos.y + char_height <= background.jumpPlacePos[0].y + 16) && (charPos.x >= background.jumpPlacePos[0].x - 50) && (charPos.x <= background.jumpPlacePos[0].x + background.jumpPlacePos[0].w - 50)){
+    else if( (charPos.y + char_height >= background.jumpPlacePos[0].y + 10) && (charPos.y + char_height <= background.jumpPlacePos[0].y + 18) && (charPos.x >= background.jumpPlacePos[0].x - 50) && (charPos.x <= background.jumpPlacePos[0].x + background.jumpPlacePos[0].w - 50)){
         if(veloY > 0){
             veloY = 0;
             jumpTime = 0;
