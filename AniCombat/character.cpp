@@ -24,6 +24,8 @@ CRT :: CRT()
 
     skillCond = false;
 
+    justGetOnJumpPlace = false;
+
     w = h =0;
 
     veloX = 0;
@@ -52,17 +54,23 @@ void CRT :: loadIMG(SDL_Renderer* renderer){
     sheetW.push_back(w); sheetH.push_back(h);
     //1
 
-    charIMG[4] = loadTexture("character/Naruto/jumpLeft.png", renderer);
-    charIMG[5] = loadTexture("character/Naruto/jumpRight.png", renderer);
+    charIMG[4] = loadTexture("character/Naruto/jumpUpLeft.png", renderer);
+    charIMG[5] = loadTexture("character/Naruto/jumpUpRight.png", renderer);
     SDL_QueryTexture(charIMG[4], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //2
 
-    charIMG[6] = loadTexture("character/Naruto/normalAtkLeft.png", renderer);
-    charIMG[7] = loadTexture("character/Naruto/normalAtkRight.png", renderer);
+    charIMG[6] = loadTexture("character/Naruto/fallDownLeft.png", renderer);
+    charIMG[7] = loadTexture("character/Naruto/fallDownRight.png", renderer);
     SDL_QueryTexture(charIMG[6], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //3
+
+    charIMG[8] = loadTexture("character/Naruto/normalAtkLeft.png", renderer);
+    charIMG[9] = loadTexture("character/Naruto/normalAtkRight.png", renderer);
+    SDL_QueryTexture(charIMG[8], NULL, NULL, &w, &h);
+    sheetW.push_back(w); sheetH.push_back(h);
+    //4
 
 }
 
@@ -91,7 +99,7 @@ void CRT :: handleEvent(SDL_Event &e)
                 break;
 
             case SDLK_w:
-                charStat = "jump";
+                charStat = "jumpUp";
                 if(charPos.y == jumpCurrentHeight){
                     charRect.x = 0;
                     veloY = - char_velo;
@@ -144,6 +152,7 @@ void CRT :: handleEvent(SDL_Event &e)
 void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background)
 {
     charPos.x += veloX;
+    if(veloX != 0 && charPos.y == jumpCurrentHeight && veloY == 0) charStat = "run";
 
     if( ( charPos.x < 0 ) || ( charPos.x + char_width > SCREEN_WIDTH ) )
     {
@@ -151,20 +160,47 @@ void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCRE
     }
     charPos.y += veloY;
 
-    if(jumpTime == 25){
-        veloY += 2;
-        jumpTime = 0;
+    if(charPos.y < jumpCurrentHeight){
+        if(veloY <= 0)
+        {
+            charStat = "jumpUp";
+        }
+        else if(veloY > 0)
+        {
+            charStat = "fallDown";
+        }
     }
-    jumpTime ++;
 
-    if( charPos.y > background.groundPos.y - charPos.h + 16 )
+    if(charStat == "jumpUp" || charStat == "fallDown"){
+        if(jumpTime == 25){
+            veloY += 2;
+            jumpTime = 0;
+        }
+        jumpTime ++;
+    }
+
+    if( charPos.y > background.groundPos.y - charPos.h + 18 )
     {
-        charPos.y -= veloY;
+        charPos.y = background.groundPos.y - charPos.h + 18 ;
         veloY = 0;
         jumpTime = 0;
     }
 
     checkJumpPlace(renderer, background);
+
+    if(veloY > 0){
+        previousVeloY = veloY;
+    }
+    if(previousVeloY > 0 && veloY == 0){
+        previousVeloY = 0;
+        skillCond = false;
+        jumpCurrentHeight = charPos.y;
+        jumpTime = 0;
+        charRect.x = 0;
+        charStat = "stand";
+        frameTime = 0;
+    }
+
 }
 
 void CRT :: loadChar()
@@ -197,28 +233,40 @@ void CRT :: loadChar()
             direction = 2;
         }
     }
-    if(charStat == "jump" && skillCond){
+    if(charStat == "jumpUp" && skillCond){
         if(direction == 1){
             charMotion = charIMG[4];
-            charRect.w = sheetW[2] / 8;
+            charRect.w = sheetW[2] / 2;
             charRect.h = sheetH[2];
         }
         else if(direction == 2){
             charMotion = charIMG[5];
-            charRect.w = sheetW[2] / 8;
+            charRect.w = sheetW[2] / 2;
             charRect.h = sheetH[2];
         }
     }
-    if(charStat == "normalAtk" && skillCond){
+    if(charStat == "fallDown" && skillCond){
         if(direction == 1){
             charMotion = charIMG[6];
-            charRect.w = sheetW[3] / 4;
+            charRect.w = sheetW[3] / 2;
             charRect.h = sheetH[3];
         }
         else if(direction == 2){
             charMotion = charIMG[7];
-            charRect.w = sheetW[3] / 4;
+            charRect.w = sheetW[3] / 2;
             charRect.h = sheetH[3];
+        }
+    }
+    if(charStat == "normalAtk" && skillCond){
+        if(direction == 1){
+            charMotion = charIMG[8];
+            charRect.w = sheetW[4] / 4;
+            charRect.h = sheetH[4];
+        }
+        else if(direction == 2){
+            charMotion = charIMG[9];
+            charRect.w = sheetW[4] / 4;
+            charRect.h = sheetH[4];
         }
     }
 }
@@ -235,11 +283,12 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
                 charRect.x += charRect.w;
                 frameTime = 0;
             }
-            if(charRect.x > sheetW[3] - charRect.w){
+            if(charRect.x > sheetW[4] - charRect.w){
                 charRect.x = 0;
                 skillCond = false;
             }
             frameTime ++;
+
         }
         charStat = "stand";
         charPos.w = char_width;
@@ -283,90 +332,33 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         jumpCurrentHeight = charPos.y;
         if(veloX == 0) charStat = "stand";
     }
-    else if(charStat == "jump" && skillCond || veloY != 0){
-        if( (charPos.y == jumpCurrentHeight - char_velo) && veloY < 0){
+    else if(charStat == "jumpUp" && skillCond){
+        SDL_RenderClear(renderer);
+        background.render(renderer);
+        SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        SDL_RenderPresent(renderer);
+        if(frameTime == 13){
+            charRect.x += charRect.w;
+            frameTime = 0;
+        }
+        if(charRect.x >= sheetW[2]){
             charRect.x = 0;
-            for(int i = 0; i < 10; i++){
-                SDL_RenderClear(renderer);
-                background.render(renderer);
-                SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-                SDL_RenderPresent(renderer);
-            }
-            charRect.x = charRect.w;
+        }
+        frameTime ++;
+    }
+    else if(charStat == "fallDown" && skillCond){
+        SDL_RenderClear(renderer);
+        background.render(renderer);
+        SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        SDL_RenderPresent(renderer);
+        if(frameTime == 13){
+            charRect.x += charRect.w;
             frameTime = 0;
         }
-        else if((charPos.y < jumpCurrentHeight - char_velo) && veloY < 0){
-            SDL_RenderClear(renderer);
-            background.render(renderer);
-            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-            SDL_RenderPresent(renderer);
-            if(frameTime == 10){
-                charRect.x += charRect.w;
-                frameTime = 0;
-            }
-            if(charRect.x > 2 * charRect.w){
-                charRect.x = charRect.w;
-            }
-            frameTime++;
-        }
-        else if((charPos.y < jumpCurrentHeight - char_velo) && veloY == 0){
-            if(direction == 1) charPos.x += 12;
-            else if(direction == 2) charPos.x -= 12;
-            charRect.x = 3 * charRect.w;
-            SDL_RenderClear(renderer);
-            background.render(renderer);
-            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-            SDL_RenderPresent(renderer);
-            frameTime = 0;
-            if(direction == 1) charPos.x -= 12;
-            else if(direction == 2) charPos.x += 12;
-        }
-        else if((charPos.y < jumpCurrentHeight - char_velo) && veloY > 0){
-            if(direction == 1) charPos.x += 12;
-            else if(direction == 2) charPos.x -= 12;
-
-            SDL_RenderClear(renderer);
-            background.render(renderer);
-            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-            SDL_RenderPresent(renderer);
-            if(frameTime == 10){
-                charRect.x += charRect.w;
-                frameTime = 0;
-            }
-            if(charRect.x > 4 * charRect.w){
-                charRect.x = 3 * charRect.w;
-            }
-            frameTime++;
-            if(direction == 1) charPos.x -= 12;
-            else if(direction == 2) charPos.x += 12;
-        }
-        else if( (charPos.y == jumpCurrentHeight - char_velo) && veloY > 0){
-            charRect.x = 5 * charRect.w;
-            frameTime = 0;
-            bool jumpCond = true;
-            while(jumpCond){
-                charPos.y = jumpCurrentHeight + 10;
-                SDL_RenderClear(renderer);
-                background.render(renderer);
-                SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
-                SDL_RenderPresent(renderer);
-                if(frameTime == 5){
-                    charRect.x += charRect.w;
-                    frameTime = 0;
-                }
-                if(charRect.x > 7 * charRect.w){
-                    charRect.x = 0;
-                    jumpCond = false;
-                    skillCond = false;
-                    frameTime = 0;
-                    charPos.y = jumpCurrentHeight;
-                }
-                frameTime++;
-            }
+        if(charRect.x >= sheetW[3]){
             charRect.x = 0;
-            frameTime = 0;
-            charStat = "stand";
         }
+        frameTime ++;
     }
     else{
         frameTime = 0;
@@ -376,38 +368,20 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
 
 void CRT :: checkJumpPlace(SDL_Renderer* renderer, BG& background)
 {
-    twocend(charPos.y + char_height, background.jumpPlacePos[1].y);
-
-    if( (charPos.y + char_height == background.jumpPlacePos[0].y) && (charPos.x >= background.jumpPlacePos[0].x) && (charPos.x + charPos.w <= background.jumpPlacePos[0].x + background.jumpPlacePos[0].w)){
-        veloY = 0;
-        charStat = "stand";
-        skillCond = false;
-        charRect.x = 0;
+    if( ( (charPos.y + char_height == background.jumpPlacePos[4].y + 14) && (charPos.x >= background.jumpPlacePos[4].x - 50) ) || ( (charPos.y + char_height == background.jumpPlacePos[3].y + 14) && (charPos.x <= background.jumpPlacePos[3].w - 30)) || ( (charPos.y + char_height == background.jumpPlacePos[2].y + 14) && (charPos.x >= background.jumpPlacePos[2].x - 50))||( (charPos.y + char_height == background.jumpPlacePos[1].y + 14) && (charPos.x <= background.jumpPlacePos[1].w - 30))||( (charPos.y + char_height == background.jumpPlacePos[0].y + 14) && (charPos.x >= background.jumpPlacePos[0].x - 50) && (charPos.x <= background.jumpPlacePos[0].x + background.jumpPlacePos[0].w - 50))){
+        if(veloY > 0){
+            veloY = 0;
+            jumpTime = 0;
+        }
     }
-    if( (charPos.y + char_height == background.jumpPlacePos[1].y) && (charPos.x + charPos.w <= background.jumpPlacePos[1].x + background.jumpPlacePos[1].w)){
-        veloY = 0;
-        charStat = "stand";
-        skillCond = false;
-        charRect.x = 0;
+    else if(( (charPos.y + char_height == background.jumpPlacePos[4].y + 14) && (charPos.x < background.jumpPlacePos[4].x - 50) ) || ( (charPos.y + char_height == background.jumpPlacePos[3].y + 14) && (charPos.x > background.jumpPlacePos[3].w -30)) || ( (charPos.y + char_height == background.jumpPlacePos[2].y + 14) && (charPos.x < background.jumpPlacePos[2].x - 50))||( (charPos.y + char_height == background.jumpPlacePos[1].y + 14) && (charPos.x > background.jumpPlacePos[1].w - 30))||( (charPos.y + char_height == background.jumpPlacePos[0].y + 14) && ((charPos.x < background.jumpPlacePos[0].x - 50) || (charPos.x > background.jumpPlacePos[0].x + background.jumpPlacePos[0].w - 50)))){
+        if(veloY == 0){
+            veloY = 2;
+            charStat = "fallDown";
+            skillCond = true;
+        }
     }
-    if( (charPos.y + char_height == background.jumpPlacePos[2].y) && (charPos.x >= background.jumpPlacePos[2].x)){
-        veloY = 0;
-        charStat = "stand";
-        skillCond = false;
-        charRect.x = 0;
-    }
-    if( (charPos.y + char_height == background.jumpPlacePos[3].y) && (charPos.x + charPos.w <= background.jumpPlacePos[3].x + background.jumpPlacePos[3].w)){
-        veloY = 0;
-        charStat = "stand";
-        skillCond = false;
-        charRect.x = 0;
-    }
-    if( (charPos.y + char_height == background.jumpPlacePos[4].y) && (charPos.x >= background.jumpPlacePos[4].x) ){
-        veloY = 0;
-        charStat = "stand";
-        skillCond = false;
-        charRect.x = 0;
-    }
+    twocend(charStat, charPos.y + char_height);
 }
 
 /*

@@ -51,6 +51,9 @@ class CRT{
 
         bool skillCond;
 
+        bool justGetOnJumpPlace;
+        int previousVeloY;
+
         int frameTime;
 
         vector <int> sheetW, sheetH;
