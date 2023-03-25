@@ -51,7 +51,6 @@ class CRT{
 
         bool skillCond;
 
-        bool justGetOnJumpPlace;
         int previousVeloY;
 
         int frameTime;
