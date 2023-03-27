@@ -28,6 +28,6 @@ class BG{
 
     private:
         Mix_Music* BGMusic;
-        int cloudTime;
+        Uint32 cloudTime;
 
 };

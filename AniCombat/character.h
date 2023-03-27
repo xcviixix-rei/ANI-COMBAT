@@ -12,7 +12,7 @@ class CRT{
 
         static const int char_width = 80;
         static const int char_height = 96;
-        static const int char_velo = 4;
+        static const int char_velo = 8;
 
         CRT();
 
@@ -42,7 +42,7 @@ class CRT{
 
     private:
 
-        Uint32 startTime;
+        Uint32 startTime, frameTime;
 
         string charStat;
 
@@ -53,14 +53,13 @@ class CRT{
 
         int previousVeloY;
 
-        int frameTime;
-
         vector <int> sheetW, sheetH;
         int w, h;
 
         int veloX, veloY;
         int jumpCurrentHeight;
-        int jumpTime;
+
+        Uint32 jumpTime, normalAtkTime;
 
         SDL_Texture* charTexture;
 

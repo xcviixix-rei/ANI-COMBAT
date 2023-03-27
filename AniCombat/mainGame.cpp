@@ -27,9 +27,18 @@ int main(int argc, char* argv[]){
 
     SDL_Event e;
 
+    SDL_DisplayMode current;
+    if (SDL_GetCurrentDisplayMode(0, &current) != 0) {
+        SDL_Log("Could not get display mode for video display #%d: %s", 0, SDL_GetError());
+    }
+    int refreshRate = current.refresh_rate;
+
     bool gameRunning = true;
 
     while(gameRunning){
+        if(refreshRate == 72) SDL_Delay(6);
+        else if(refreshRate == 144) SDL_Delay(16);
+        else if(refreshRate > 144) SDL_Delay(refreshRate / 9);
         while(SDL_PollEvent(&e)){
             if(e.type == SDL_QUIT){
                 gameRunning = false;

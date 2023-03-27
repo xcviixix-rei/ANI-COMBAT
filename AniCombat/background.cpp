@@ -20,7 +20,7 @@ BG :: BG(){
             Mix_ResumeMusic();
         }
     }
-    cloudTime = 0;
+    cloudTime = SDL_GetTicks();
 }
 
 void BG :: loadBG(SDL_Renderer* renderer){
@@ -88,11 +88,10 @@ void BG :: renderCloud(SDL_Renderer* renderer){
     SDL_RenderCopy(renderer, cloud, NULL, &cloudPos1);
     SDL_RenderCopy(renderer, cloud, NULL, &cloudPos2);
 
-    if(cloudTime == 3){
+    if(SDL_GetTicks() - cloudTime >= 30){
         cloudPos.x += cloudVelo;
-        cloudTime = 0;
+        cloudTime = SDL_GetTicks();
     }
-    cloudTime ++;
     if(cloudPos.x > screenW){
         cloudPos.x = 0;
     }
