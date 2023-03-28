@@ -17,10 +17,13 @@ class CRT{
         CRT();
 
         SDL_Rect charRect, charPos;
+        SDL_Rect objectRect, objectPos;
 
         SDL_Texture* charMotion;
+        SDL_Texture* object;
 
-        SDL_Texture* charIMG[10];
+        SDL_Texture* charIMG[50];
+        SDL_Texture* objectIMG[10];
 
         Mix_Chunk* sfx;
 
@@ -33,36 +36,36 @@ class CRT{
         void move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCREEN_HEIGHT, BG &background );
 
         void loadChar();
+        void loadObject();
 
+        void renderObjects(SDL_Renderer* renderer, BG background);
         void render(SDL_Renderer* renderer, BG &background);
-
         void renderSkill(SDL_Renderer* renderer, BG &background);
 
         void checkJumpPlace(SDL_Renderer* renderer, BG &background);
 
     private:
 
-        Uint32 startTime, frameTime;
-
-        string charStat;
-
+        int veloX, veloY;
+        int previousVeloY;
+        int w, h;
+        int jumpCurrentHeight;
+        int objectVelo;
+        int shurikenVelo;
         int direction;
         // 1 la left, 2 la right
+        vector <int> sheetW, sheetH, objectSheetW, objectSheetH;
+
+        string charStat;
+        string objectType;
 
         bool skillCond;
+        bool objectCond;
 
-        int previousVeloY;
-
-        vector <int> sheetW, sheetH;
-        int w, h;
-
-        int veloX, veloY;
-        int jumpCurrentHeight;
-
-        Uint32 jumpTime, normalAtkTime;
+        Uint32 startTime, frameTime, objectFrameTime;
+        Uint32 jumpTime, normalAtkTime, throwShurikenTime, objectMoveTime;
 
         SDL_Texture* charTexture;
-
 };
 
 bool checkCollision( SDL_Rect a, SDL_Rect b );

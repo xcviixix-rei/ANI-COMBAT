@@ -38,6 +38,8 @@
 		<Unit filename="gameHeader.cpp" />
 		<Unit filename="gameHeader.h" />
 		<Unit filename="mainGame.cpp" />
+		<Unit filename="object.cpp" />
+		<Unit filename="object.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

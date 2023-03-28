@@ -14,14 +14,19 @@ using namespace std;
 CRT :: CRT()
 {
     frameTime = SDL_GetTicks();
+    objectFrameTime = SDL_GetTicks();
     startTime = SDL_GetTicks();
 
     charRect.x = charRect.y = 0;
+    objectRect.x = objectRect.y = 0;
+    objectPos.w = 100;
+    objectPos.h = 50;
 
     charStat = "stand";
     direction = 2;
 
     skillCond = false;
+    objectCond = false;
 
     w = h =0;
 
@@ -30,6 +35,7 @@ CRT :: CRT()
 
     jumpTime = SDL_GetTicks();
     normalAtkTime = SDL_GetTicks();
+    throwShurikenTime = SDL_GetTicks();
 
     charPos.w = char_width;
     charPos.h = char_height;
@@ -41,36 +47,48 @@ void CRT :: initPosition(BG background){
 }
 
 void CRT :: loadIMG(SDL_Renderer* renderer){
-    charIMG[0] = loadTexture("character/Naruto/standLeft.png", renderer);
-    charIMG[1] = loadTexture("character/Naruto/standRight.png", renderer);
+    charIMG[0] = loadTexture("character/Naruto/narutoSpriteSheet/standLeft.png", renderer);
+    charIMG[1] = loadTexture("character/Naruto/narutoSpriteSheet/standRight.png", renderer);
     SDL_QueryTexture(charIMG[0], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //0
 
-    charIMG[2] = loadTexture("character/Naruto/runLeft.png", renderer);
-    charIMG[3] = loadTexture("character/Naruto/runRight.png", renderer);
+    charIMG[2] = loadTexture("character/Naruto/narutoSpriteSheet/runLeft.png", renderer);
+    charIMG[3] = loadTexture("character/Naruto/narutoSpriteSheet/runRight.png", renderer);
     SDL_QueryTexture(charIMG[2], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //1
 
-    charIMG[4] = loadTexture("character/Naruto/jumpUpLeft.png", renderer);
-    charIMG[5] = loadTexture("character/Naruto/jumpUpRight.png", renderer);
+    charIMG[4] = loadTexture("character/Naruto/narutoSpriteSheet/jumpUpLeft.png", renderer);
+    charIMG[5] = loadTexture("character/Naruto/narutoSpriteSheet/jumpUpRight.png", renderer);
     SDL_QueryTexture(charIMG[4], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //2
 
-    charIMG[6] = loadTexture("character/Naruto/fallDownLeft.png", renderer);
-    charIMG[7] = loadTexture("character/Naruto/fallDownRight.png", renderer);
+    charIMG[6] = loadTexture("character/Naruto/narutoSpriteSheet/fallDownLeft.png", renderer);
+    charIMG[7] = loadTexture("character/Naruto/narutoSpriteSheet/fallDownRight.png", renderer);
     SDL_QueryTexture(charIMG[6], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //3
 
-    charIMG[8] = loadTexture("character/Naruto/normalAtkLeft.png", renderer);
-    charIMG[9] = loadTexture("character/Naruto/normalAtkRight.png", renderer);
+    charIMG[8] = loadTexture("character/Naruto/narutoSpriteSheet/normalAtkLeft.png", renderer);
+    charIMG[9] = loadTexture("character/Naruto/narutoSpriteSheet/normalAtkRight.png", renderer);
     SDL_QueryTexture(charIMG[8], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //4
 
+    charIMG[10] = loadTexture("character/Naruto/narutoSpriteSheet/throwShurikenLeft.png", renderer);
+    charIMG[11] = loadTexture("character/Naruto/narutoSpriteSheet/throwShurikenRight.png", renderer);
+    SDL_QueryTexture(charIMG[10], NULL, NULL, &w, &h);
+    sheetW.push_back(w); sheetH.push_back(h);
+    //5
+
+
+    objectIMG[0] = loadTexture("character/Naruto/narutoSpriteSheet/shurikenLeft.png", renderer);
+    objectIMG[1] = loadTexture("character/Naruto/narutoSpriteSheet/shurikenRight.png", renderer);
+    SDL_QueryTexture(objectIMG[0], NULL, NULL, &w, &h);
+    objectSheetW.push_back(w); objectSheetH.push_back(h);
+    //0
 }
 
 void CRT :: handleEvent(SDL_Event &e)
@@ -80,21 +98,21 @@ void CRT :: handleEvent(SDL_Event &e)
         switch( e.key.keysym.sym )
         {
             case SDLK_a:
+                veloX -= char_velo;
+                direction = 1;
                 if(charPos.y == jumpCurrentHeight){
                     charStat = "run";
                     charRect.x = 0;
                 }
-                veloX -= char_velo;
-                direction = 1;
                 break;
 
             case SDLK_d:
+                veloX += char_velo;
+                direction = 2;
                 if(charPos.y == jumpCurrentHeight){
                     charStat = "run";
                     charRect.x = 0;
                 }
-                veloX += char_velo;
-                direction = 2;
                 break;
 
             case SDLK_w:
@@ -102,16 +120,26 @@ void CRT :: handleEvent(SDL_Event &e)
                     charStat = "jumpUp";
                     charRect.x = 0;
                     veloY = - 1.5 * char_velo;
-                    skillCond = true;
                     jumpTime = SDL_GetTicks();
                 }
                 break;
 
             case SDLK_j:
-                if((SDL_GetTicks() - normalAtkTime >= 120) && charPos.y == jumpCurrentHeight){
+                if((SDL_GetTicks() - normalAtkTime >= 120) && (charPos.y == jumpCurrentHeight)){
                     charRect.x = 0;
                     charStat = "normalAtk";
                     skillCond = true;
+                }
+                break;
+
+            case SDLK_u:
+                if((SDL_GetTicks() - throwShurikenTime >= 1000) && (charPos.y == jumpCurrentHeight)){
+                    charRect.x = 0;
+                    charStat = "throwShuriken";
+                    objectType = "shuriken";
+                    skillCond = true;
+                    objectCond = true;
+                    objectMoveTime = SDL_GetTicks();
                 }
                 break;
         }
@@ -122,26 +150,32 @@ void CRT :: handleEvent(SDL_Event &e)
         switch( e.key.keysym.sym )
         {
             case SDLK_a:
+                veloX += char_velo;
                 if(charPos.y == jumpCurrentHeight){
                     charRect.x = 0;
                     charStat = "stand";
                 }
-                veloX += char_velo;
                 break;
 
             case SDLK_d:
+                veloX -= char_velo;
                 if(charPos.y == jumpCurrentHeight){
                     charRect.x = 0;
                     charStat = "stand";
                 }
-                veloX -= char_velo;
                 break;
 
             case SDLK_j:
-                if(charPos.y == jumpCurrentHeight){
+                if(charPos.y == jumpCurrentHeight && charStat == "normalAtk"){
                     charRect.x = 0;
                     skillCond = false;
-                    charStat = "stand";
+                }
+                break;
+
+            case SDLK_u:
+                if(charPos.y == jumpCurrentHeight && charStat == "throwShuriken"){
+                    charRect.x = 0;
+                    skillCond = false;
                 }
                 break;
         }
@@ -160,6 +194,7 @@ void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCRE
         {
             charPos.x -= veloX;
         }
+
         charPos.y += veloY;
 
         if(charStat == "jumpUp" || charStat == "fallDown"){
@@ -194,12 +229,30 @@ void CRT :: move( SDL_Renderer* renderer, const int SCREEN_WIDTH, const int SCRE
         }
         if(previousVeloY > 0 && veloY == 0){
             previousVeloY = 0;
-            skillCond = false;
             jumpCurrentHeight = charPos.y;
             jumpTime = SDL_GetTicks();
             charRect.x = 0;
             charStat = "stand";
             frameTime = SDL_GetTicks();
+        }
+    }
+}
+
+void CRT :: loadObject()
+{
+    object = nullptr;
+
+    if(objectType == "shuriken"){
+        objectVelo = 12;
+        if(direction == 1){
+            object = objectIMG[0];
+            objectRect.w = objectSheetW[0] / 3;
+            objectRect.h = objectSheetH[0];
+        }
+        else if(direction == 2){
+            object = objectIMG[1];
+            objectRect.w = objectSheetW[0] / 3;
+            objectRect.h = objectSheetH[0];
         }
     }
 }
@@ -220,16 +273,14 @@ void CRT :: loadChar()
             charRect.h = sheetH[0];
         }
     }
-    if(veloY == 0 && charPos.y == jumpCurrentHeight){
+    if(charStat == "run"){
         if(veloX < 0){
-            charStat = "run";
             charMotion = charIMG[2];
             charRect.w = sheetW[1] / 8;
             charRect.h = sheetH[1];
             direction = 1;
         }
         else if(veloX > 0){
-            charStat = "run";
             charMotion = charIMG[3];
             charRect.w = sheetW[1] / 8;
             charRect.h = sheetH[1];
@@ -272,6 +323,52 @@ void CRT :: loadChar()
             charRect.h = sheetH[4];
         }
     }
+    if(charStat == "throwShuriken"){
+        if(direction == 1){
+            charMotion = charIMG[10];
+            charRect.w = sheetW[5] / 6;
+            charRect.h = sheetH[5];
+        }
+        else if(direction == 2){
+            charMotion = charIMG[11];
+            charRect.w = sheetW[5] / 6;
+            charRect.h = sheetH[5];
+        }
+    }
+}
+
+void CRT :: renderObjects(SDL_Renderer* renderer, BG background){
+    loadObject();
+
+    if(objectType == "shuriken"){
+        if(objectCond){
+            objectPos.x = charPos.x ;
+            objectPos.y = charPos.y + charPos.h / 3;
+            objectCond = false;
+            if(direction == 1) shurikenVelo -= objectVelo;
+            else if(direction == 2) shurikenVelo += objectVelo;
+        }
+        SDL_RenderCopy(renderer, object, &objectRect, &objectPos);
+        if(SDL_GetTicks() - objectFrameTime >= 50){
+            objectRect.x += objectRect.w;
+            objectFrameTime = SDL_GetTicks();
+        }
+        if(objectRect.x >= objectSheetW[0]){
+            objectRect.x = 0;
+        }
+        if(SDL_GetTicks() - objectMoveTime >= 10){
+            objectPos.x += shurikenVelo;
+            objectMoveTime = SDL_GetTicks();
+        }
+        if( ( objectPos.x + charPos.w < 0 ) || ( objectPos.x > background.screenW) ){
+            object = nullptr;
+            objectType.clear();
+            shurikenVelo = 0;
+            objectVelo = 0;
+            objectMoveTime = SDL_GetTicks();
+        }
+    }
+
 }
 
 void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
@@ -285,8 +382,9 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
             SDL_RenderClear(renderer);
             background.render(renderer);
             SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+            renderObjects(renderer, background);
             SDL_RenderPresent(renderer);
-            if(SDL_GetTicks() - frameTime >= 70){
+            if(SDL_GetTicks() - frameTime >= 50){
                 charRect.x += charRect.w;
                 frameTime = SDL_GetTicks();
             }
@@ -303,19 +401,38 @@ void CRT :: renderSkill(SDL_Renderer* renderer, BG &background){
         charPos.h = char_height;
         normalAtkTime = SDL_GetTicks();
     }
+    if(charStat == "throwShuriken" ){
+        while(skillCond){
+            SDL_RenderClear(renderer);
+            background.render(renderer);
+            SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+            renderObjects(renderer, background);
+            SDL_RenderPresent(renderer);
+            if(SDL_GetTicks() - frameTime >= 50){
+                charRect.x += charRect.w;
+                frameTime = SDL_GetTicks();
+            }
+            if(charRect.x > sheetW[5] - charRect.w){
+                charRect.x = 0;
+                skillCond = false;
+            }
+        }
+        charStat = "stand";
+        charPos.w = char_width;
+        charPos.h = char_height;
+        throwShurikenTime = SDL_GetTicks();
+    }
 }
 
 void CRT :: render(SDL_Renderer* renderer, BG &background)
 {
     loadChar();
 
-    cend(charStat);
-    if(charMotion == nullptr) cend("NOOOOOOOOO");
-
     if(charStat == "stand"){
         SDL_RenderClear(renderer);
         background.render(renderer);
         SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        renderObjects(renderer, background);
         SDL_RenderPresent(renderer);
         if(SDL_GetTicks() - frameTime >= 100){
             charRect.x += charRect.w;
@@ -330,6 +447,7 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         SDL_RenderClear(renderer);
         background.render(renderer);
         SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        renderObjects(renderer, background);
         SDL_RenderPresent(renderer);
         if(SDL_GetTicks() - frameTime >= 80){
             charRect.x += charRect.w;
@@ -345,6 +463,7 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         SDL_RenderClear(renderer);
         background.render(renderer);
         SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        renderObjects(renderer, background);
         SDL_RenderPresent(renderer);
         if(SDL_GetTicks() - frameTime >= 80){
             charRect.x += charRect.w;
@@ -358,6 +477,7 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         SDL_RenderClear(renderer);
         background.render(renderer);
         SDL_RenderCopy(renderer, charMotion, &charRect, &charPos);
+        renderObjects(renderer, background);
         SDL_RenderPresent(renderer);
         if(SDL_GetTicks() - frameTime >= 80){
             charRect.x += charRect.w;
@@ -371,6 +491,7 @@ void CRT :: render(SDL_Renderer* renderer, BG &background)
         frameTime = SDL_GetTicks();
         renderSkill(renderer, background);
     }
+    if(veloY == 0 && charPos.y == jumpCurrentHeight && veloX != 0) charStat = "run";
 }
 
 void CRT :: checkJumpPlace(SDL_Renderer* renderer, BG& background)
@@ -419,7 +540,7 @@ void CRT :: checkJumpPlace(SDL_Renderer* renderer, BG& background)
             veloY = 2;
             charStat = "fallDown";
             jumpTime = SDL_GetTicks();
-            skillCond = true;
+            jumpCurrentHeight = background.groundPos.y - charPos.h + 16;
         }
     }
 }

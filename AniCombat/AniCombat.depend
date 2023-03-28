@@ -123,7 +123,7 @@
 	<SDL_image.h>
 	<SDL_mixer.h>
 
-1679934162 source:c:\users\admin\desktop\anicombat\anicombat\character.cpp
+1680021260 source:c:\users\admin\desktop\anicombat\anicombat\character.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -132,7 +132,7 @@
 	"background.h"
 	"gameHeader.h"
 
-1679914622 c:\users\admin\desktop\anicombat\anicombat\character.h
+1680020542 c:\users\admin\desktop\anicombat\anicombat\character.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -154,4 +154,11 @@
 	"gameHeader.h"
 	"background.h"
 	"character.h"
+
+1680008393 source:c:\users\admin\desktop\anicombat\anicombat\object.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"character.h"
+	"gameHeader.h"
 
