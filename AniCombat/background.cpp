@@ -1,13 +1,9 @@
-#include <bits/stdc++.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include "gameHeader.h"
 #include "background.h"
 
 using namespace std;
 
-BG :: BG(){
+BG :: BG()
+{
     BGMusic = loadSong("background/#themeMusic/lobbyMusic2.mp3");
     if( Mix_PlayingMusic() == 0 )
     {
@@ -23,7 +19,12 @@ BG :: BG(){
     cloudTime = SDL_GetTicks();
 }
 
-void BG :: loadBG(SDL_Renderer* renderer){
+BG :: ~BG()
+{
+}
+
+void BG :: loadBG(SDL_Renderer* renderer)
+{
     int rate;
     string pathFirst = "background/jumpPlace/";
     string pathLast = ".png";
@@ -76,7 +77,8 @@ void BG :: loadBG(SDL_Renderer* renderer){
     jumpPlacePos[4].x = screenW - jumpPlacePos[4].w;
 }
 
-void BG :: renderCloud(SDL_Renderer* renderer){
+void BG :: renderCloud(SDL_Renderer* renderer)
+{
     SDL_Rect cloudPos1, cloudPos2;
 
     cloudPos1.w = cloudPos2.w = screenW;
@@ -88,11 +90,13 @@ void BG :: renderCloud(SDL_Renderer* renderer){
     SDL_RenderCopy(renderer, cloud, NULL, &cloudPos1);
     SDL_RenderCopy(renderer, cloud, NULL, &cloudPos2);
 
-    if(SDL_GetTicks() - cloudTime >= 30){
+    if(SDL_GetTicks() - cloudTime >= 30)
+    {
         cloudPos.x += cloudVelo;
         cloudTime = SDL_GetTicks();
     }
-    if(cloudPos.x > screenW){
+    if(cloudPos.x > screenW)
+    {
         cloudPos.x = 0;
     }
 }
@@ -106,7 +110,8 @@ void BG :: renderJumpPlace(SDL_Renderer* renderer)
     SDL_RenderCopy(renderer, jump[4], NULL, &jumpPlacePos[4]);
 }
 
-void BG :: render(SDL_Renderer* renderer){
+void BG :: render(SDL_Renderer* renderer)
+{
     SDL_RenderCopy(renderer, background, NULL, NULL);
     renderCloud(renderer);
     SDL_RenderCopy(renderer, stage, NULL, &stagePos);

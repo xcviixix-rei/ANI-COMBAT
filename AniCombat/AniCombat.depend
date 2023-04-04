@@ -123,7 +123,7 @@
 	<SDL_image.h>
 	<SDL_mixer.h>
 
-1680021260 source:c:\users\admin\desktop\anicombat\anicombat\character.cpp
+1680083144 source:c:\users\admin\desktop\anicombat\anicombat\character.cpp
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
@@ -161,4 +161,75 @@
 	<SDL_mixer.h>
 	"character.h"
 	"gameHeader.h"
+
+1680526163 source:c:\users\admin\onedrive\desktop\anicombat\background.cpp
+	"background.h"
+
+1680611475 c:\users\admin\onedrive\desktop\anicombat\gameheader.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+
+1680526163 c:\users\admin\onedrive\desktop\anicombat\background.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"gameHeader.h"
+
+1680611467 source:c:\users\admin\onedrive\desktop\anicombat\gameheader.cpp
+	"gameHeader.h"
+
+1680607050 source:c:\users\admin\onedrive\desktop\anicombat\maingame.cpp
+	"gameHeader.h"
+	"background.h"
+	"player1.h"
+	"player2.h"
+
+1680504894 c:\users\admin\onedrive\desktop\anicombat\character.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"background.h"
+	"gameHeader.h"
+
+1680449875 source:c:\users\admin\onedrive\desktop\anicombat\character.cpp
+	"character.h"
+
+1680534593 source:c:\users\admin\onedrive\desktop\anicombat\flyingobjects.cpp
+	"flyingObjects.h"
+
+1680591185 c:\users\admin\onedrive\desktop\anicombat\flyingobjects.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"background.h"
+	"player.h"
+
+1680606907 source:c:\users\admin\onedrive\desktop\anicombat\player1.cpp
+	"player1.h"
+
+1680606907 c:\users\admin\onedrive\desktop\anicombat\player1.h
+	"player.h"
+
+1680612165 source:c:\users\admin\onedrive\desktop\anicombat\player.cpp
+	"player.h"
+
+1680621380 source:c:\users\admin\onedrive\desktop\anicombat\player2.cpp
+	"player2.h"
+
+1680626542 c:\users\admin\onedrive\desktop\anicombat\player.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"background.h"
+	"gameHeader.h"
+
+1680601295 source:c:\users\admin\onedrive\desktop\anicombat\anicombat.cpp
+
+1680606907 c:\users\admin\onedrive\desktop\anicombat\player2.h
+	"player.h"
 
