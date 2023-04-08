@@ -1,13 +1,15 @@
+#pragma once
+
 #include"player.h"
 
 using namespace std;
-
-#pragma once
 
 class player2 : public CRT
 {
     public:
         player2(BG background);
+
+        SDL_Rect player2Body;
 
         void initplayer2();
         void loadChar();

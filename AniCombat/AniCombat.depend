@@ -103,25 +103,21 @@
 	"background.h"
 	"character.h"
 
-1679844268 source:c:\users\admin\desktop\anicombat\anicombat\background.cpp
+1680714996 source:c:\users\admin\desktop\anicombat\anicombat\background.cpp
+	"background.h"
+
+1680611475 c:\users\admin\desktop\anicombat\anicombat\gameheader.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+
+1680526163 c:\users\admin\desktop\anicombat\anicombat\background.h
 	<bits/stdc++.h>
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
 	"gameHeader.h"
-	"background.h"
-
-1678774861 c:\users\admin\desktop\anicombat\anicombat\gameheader.h
-	<bits/stdc++.h>
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_mixer.h>
-
-1679844241 c:\users\admin\desktop\anicombat\anicombat\background.h
-	<bits/stdc++.h>
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_mixer.h>
 
 1680083144 source:c:\users\admin\desktop\anicombat\anicombat\character.cpp
 	<bits/stdc++.h>
@@ -139,21 +135,17 @@
 	<SDL_mixer.h>
 	"background.h"
 
-1678774861 source:c:\users\admin\desktop\anicombat\anicombat\gameheader.cpp
-	<bits/stdc++.h>
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_mixer.h>
+1680611467 source:c:\users\admin\desktop\anicombat\anicombat\gameheader.cpp
 	"gameHeader.h"
 
-1679925200 source:c:\users\admin\desktop\anicombat\anicombat\maingame.cpp
-	<bits/stdc++.h>
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_mixer.h>
+1680924318 source:c:\users\admin\desktop\anicombat\anicombat\maingame.cpp
 	"gameHeader.h"
 	"background.h"
-	"character.h"
+	"player1.h"
+	"player2.h"
+	"statusBar1.h"
+	"statusBar2.h"
+	"collision.h"
 
 1680008393 source:c:\users\admin\desktop\anicombat\anicombat\object.cpp
 	<SDL.h>
@@ -232,4 +224,68 @@
 
 1680606907 c:\users\admin\onedrive\desktop\anicombat\player2.h
 	"player.h"
+
+1680601295 source:c:\users\admin\desktop\anicombat\anicombat\anicombat.cpp
+
+1680534593 source:c:\users\admin\desktop\anicombat\anicombat\flyingobjects.cpp
+	"flyingObjects.h"
+
+1680778794 c:\users\admin\desktop\anicombat\anicombat\flyingobjects.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"background.h"
+	"player.h"
+
+1680925503 c:\users\admin\desktop\anicombat\anicombat\player.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	"background.h"
+	"gameHeader.h"
+
+1680864574 c:\users\admin\desktop\anicombat\anicombat\player1.h
+	"player.h"
+	"player1Object.h"
+
+1680918212 c:\users\admin\desktop\anicombat\anicombat\player2.h
+	"player.h"
+
+1680925595 source:c:\users\admin\desktop\anicombat\anicombat\player.cpp
+	"player.h"
+
+1680920317 source:c:\users\admin\desktop\anicombat\anicombat\player1.cpp
+	"player1.h"
+
+1680920317 source:c:\users\admin\desktop\anicombat\anicombat\player2.cpp
+	"player2.h"
+
+1680791053 c:\users\admin\desktop\anicombat\anicombat\player1object.h
+	<bits/stdc++.h>
+	<SDL.h>
+	<SDL_image.h>
+	"gameHeader.h"
+
+1680796333 source:c:\users\admin\desktop\anicombat\anicombat\player1object.cpp
+	"player1Object.h"
+
+1680925532 source:c:\users\admin\desktop\anicombat\anicombat\collision.cpp
+	"collision.h"
+
+1680875238 c:\users\admin\desktop\anicombat\anicombat\collision.h
+	"player1.h"
+	"player2.h"
+
+1680924420 source:c:\users\admin\desktop\anicombat\anicombat\statusbar2.cpp
+	"statusBar2.h"
+
+1680923151 c:\users\admin\desktop\anicombat\anicombat\statusbar1.h
+	"gameHeader.h"
+
+1680923466 source:c:\users\admin\desktop\anicombat\anicombat\statusbar1.cpp
+	"statusBar1.h"
+
+1680924272 c:\users\admin\desktop\anicombat\anicombat\statusbar2.h
+	"gameHeader.h"
 

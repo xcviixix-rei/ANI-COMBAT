@@ -26,8 +26,6 @@ BG :: ~BG()
 void BG :: loadBG(SDL_Renderer* renderer)
 {
     int rate;
-    string pathFirst = "background/jumpPlace/";
-    string pathLast = ".png";
     background = loadTexture("background/backgroundLayer.png", renderer);
     ground = loadTexture("background/ground.png", renderer);
     stage = loadTexture("background/stage.png", renderer);

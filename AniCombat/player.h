@@ -1,3 +1,5 @@
+#pragma once
+
 #include <bits/stdc++.h>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -7,8 +9,6 @@
 
 using namespace std;
 
-#pragma once
-
 enum characterStatus
 {
     stand,
@@ -17,13 +17,9 @@ enum characterStatus
     fallDown,
     normalAttack,
     throwShuriken,
-    getsugaTenshou
-};
-
-enum objectType
-{
-    shuriken,
-    airSlash
+    getsugaTenshou,
+    takeDamage,
+    die
 };
 
 class CRT
@@ -36,7 +32,6 @@ class CRT
 
         SDL_Rect charRect, charPos;
 
-        SDL_Texture* charMotion;
         SDL_Texture* charTexture;
         vector <SDL_Texture*> charIMG;
 
@@ -44,8 +39,10 @@ class CRT
 
         int char_width, char_height;
         int healthPoints;
+        int takeDamageCount;
         int veloX, veloY;
         int tmpVelo;
+        int previousVeloX;
         int previousVeloY;
         int w, h;
         int jumpCurrentHeight;
@@ -56,12 +53,15 @@ class CRT
         BG background;
 
         characterStatus charStat, previousCharStat;
-        objectType objType;
 
+        bool leftBeenPressed, rightBeenPressed;
         bool skillCond, normalAttackCond, throwingObjectCond;
+        bool takingDamage, isDeath;
+        bool enemyHPDecreased;
 
         Uint32 startTime, frameTime;
         Uint32 jumpTime, normalAttackTime, throwingObjectTime;
+        Uint32 takingDamageTime;
 
         void loadSfx();
 

@@ -31,21 +31,25 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="aniCombat.cpp" />
 		<Unit filename="background.cpp" />
 		<Unit filename="background.h" />
-		<Unit filename="flyingObjects.cpp" />
-		<Unit filename="flyingObjects.h" />
+		<Unit filename="collision.cpp" />
+		<Unit filename="collision.h" />
 		<Unit filename="gameHeader.cpp" />
 		<Unit filename="gameHeader.h" />
 		<Unit filename="mainGame.cpp" />
-		<Unit filename="mainGame.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="player1.cpp" />
 		<Unit filename="player1.h" />
+		<Unit filename="player1Object.cpp" />
+		<Unit filename="player1Object.h" />
 		<Unit filename="player2.cpp" />
 		<Unit filename="player2.h" />
+		<Unit filename="statusBar1.cpp" />
+		<Unit filename="statusBar1.h" />
+		<Unit filename="statusBar2.cpp" />
+		<Unit filename="statusBar2.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -2,6 +2,9 @@
 #include "background.h"
 #include "player1.h"
 #include "player2.h"
+#include "statusBar1.h"
+#include "statusBar2.h"
+#include "collision.h"
 
 using namespace std;
 
@@ -23,9 +26,13 @@ int main(int argc, char* argv[])
     plr1.initplayer1();
     plr1.loadIMG(renderer);
 
+    statusBar1 stat1(plr1.healthPoints, renderer);
+
     player2 plr2(background);
     plr2.initplayer2();
     plr2.loadIMG(renderer);
+
+    statusBar2 stat2(plr2.healthPoints, renderer);
 
     SDL_Event e;
 
@@ -53,10 +60,17 @@ int main(int argc, char* argv[])
         plr1.move();
         plr2.move();
 
+        collisionBetweenPlayer(plr1, plr2);
+
+        stat1.updateHP(plr1.healthPoints);
+        stat2.updateHP(plr2.healthPoints);
+
         SDL_RenderClear(renderer);
         background.render(renderer);
         plr1.render(renderer);
         plr2.render(renderer);
+        stat1.renderStatus(renderer);
+        stat2.renderStatus(renderer);
         SDL_RenderPresent(renderer);
     }
     quitSDL(window, renderer);
