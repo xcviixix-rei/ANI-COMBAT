@@ -17,8 +17,6 @@ player2 :: player2(BG bg)
     normalAttackCond = false;
     throwingObjectCond = false;
 
-    takingDamage = isDeath = false;
-
     w = h = 0;
 
     veloX = 0;
@@ -104,115 +102,125 @@ void player2 :: loadIMG(SDL_Renderer* renderer)
     sheetW.push_back(w); sheetH.push_back(h);
     //6
 
-    charTexture = loadTexture("character/Ichigo/ichigoSpriteSheet/dieLeft.png", renderer);
+    charTexture = loadTexture("character/Ichigo/ichigoSpriteSheet/winLeft.png", renderer);
     charIMG.push_back(charTexture); // charIMG[14]
-    charTexture = loadTexture("character/Ichigo/ichigoSpriteSheet/dieRight.png", renderer);
+    charTexture = loadTexture("character/Ichigo/ichigoSpriteSheet/winRight.png", renderer);
     charIMG.push_back(charTexture); // charIMG[15]
     SDL_QueryTexture(charIMG[14], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //7
+
+    charTexture = loadTexture("character/Ichigo/ichigoSpriteSheet/dieLeft.png", renderer);
+    charIMG.push_back(charTexture); // charIMG[16]
+    charTexture = loadTexture("character/Ichigo/ichigoSpriteSheet/dieRight.png", renderer);
+    charIMG.push_back(charTexture); // charIMG[17]
+    SDL_QueryTexture(charIMG[16], NULL, NULL, &w, &h);
+    sheetW.push_back(w); sheetH.push_back(h);
+    //8
 }
 void player2 :: handleEvent(SDL_Event &e)
 {
-    if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
-    {
-        switch( e.key.keysym.sym )
+    if(charStat != die && charStat != win && charStat != takeDamage){
+        if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
         {
-            case SDLK_LEFT:
-                if(!takingDamage && !isDeath && !skillCond){
-                    leftBeenPressed = true;
-                    charRect.x = 0;
-                    veloX -= char_velo;
-                    direction = 1;
-                    if(charPos.y == jumpCurrentHeight){
-                        charStat = run;
+            switch( e.key.keysym.sym )
+            {
+                case SDLK_LEFT:
+                    if(!skillCond){
+                        leftBeenPressed = true;
+                        charRect.x = 0;
+                        veloX -= char_velo;
+                        direction = 1;
+                        if(charPos.y == jumpCurrentHeight){
+                            charStat = run;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case SDLK_RIGHT:
-                if(!takingDamage && !isDeath && !skillCond){
-                    rightBeenPressed = true;
-                    charRect.x = 0;
-                    veloX += char_velo;
-                    direction = 2;
-                    if(charPos.y == jumpCurrentHeight){
-                        charStat = run;
+                case SDLK_RIGHT:
+                    if(!skillCond){
+                        rightBeenPressed = true;
+                        charRect.x = 0;
+                        veloX += char_velo;
+                        direction = 2;
+                        if(charPos.y == jumpCurrentHeight){
+                            charStat = run;
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case SDLK_UP:
-                if(!takingDamage && !isDeath && charPos.y == jumpCurrentHeight && !skillCond){
-                    charRect.x = 0;
-                    charStat = jumpUp;
-                    veloY = - 1.5 * char_velo;
-                    jumpTime = SDL_GetTicks();
-                }
-                break;
+                case SDLK_UP:
+                    if(charPos.y == jumpCurrentHeight && !skillCond){
+                        charRect.x = 0;
+                        charStat = jumpUp;
+                        veloY = - 1.5 * char_velo;
+                        jumpTime = SDL_GetTicks();
+                    }
+                    break;
 
-            case SDLK_i:
-                if(!takingDamage && !isDeath && (SDL_GetTicks() - normalAttackTime >= 80) && (charPos.y == jumpCurrentHeight) && charStat != getsugaTenshou){
-                    charRect.x = 0;
-                    charStat = normalAttack;
-                    frameTime = SDL_GetTicks();
-                    tmpVelo = veloX;
-                    veloX = 0;
-                    skillCond = true;
-                    normalAttackCond = true;
-                    enemyHPDecreased = true;
-                }
-                break;
+                case SDLK_i:
+                    if((SDL_GetTicks() - normalAttackTime >= 80) && (charPos.y == jumpCurrentHeight) && charStat != getsugaTenshou){
+                        charRect.x = 0;
+                        charStat = normalAttack;
+                        frameTime = SDL_GetTicks();
+                        tmpVelo = veloX;
+                        veloX = 0;
+                        skillCond = true;
+                        normalAttackCond = true;
+                        enemyHPDecreased = true;
+                    }
+                    break;
 
-/*            case SDLK_o:
-                if(!takingDamage && !isDeath && (SDL_GetTicks() - throwingObjectTime >= 500) && (charPos.y == jumpCurrentHeight) && charStat != normalAttack){
-                    charRect.x = 0;
-                    charStat = getsugaTenshou;
-                    frameTime = SDL_GetTicks();
-                    tmpVelo = veloX;
-                    veloX = 0;
-                    skillCond = true;
-                    throwingObjectCond = true;
-                }
-                break; */
+    /*            case SDLK_o:
+                    if(!takingDamage && !isDeath && (SDL_GetTicks() - throwingObjectTime >= 500) && (charPos.y == jumpCurrentHeight) && charStat != normalAttack){
+                        charRect.x = 0;
+                        charStat = getsugaTenshou;
+                        frameTime = SDL_GetTicks();
+                        tmpVelo = veloX;
+                        veloX = 0;
+                        skillCond = true;
+                        throwingObjectCond = true;
+                    }
+                    break; */
+            }
         }
-    }
 
-    else if( e.type == SDL_KEYUP && e.key.repeat == 0)
-    {
-        switch( e.key.keysym.sym )
+        else if( e.type == SDL_KEYUP && e.key.repeat == 0)
         {
-            case SDLK_LEFT:
-                if(!takingDamage && !isDeath && !skillCond && leftBeenPressed){
-                    charRect.x = 0;
-                    veloX += char_velo;
-                    leftBeenPressed = false;
-                    if(charPos.y == jumpCurrentHeight){
-                        charStat = stand;
+            switch( e.key.keysym.sym )
+            {
+                case SDLK_LEFT:
+                    if(!skillCond && leftBeenPressed){
+                        charRect.x = 0;
+                        veloX += char_velo;
+                        leftBeenPressed = false;
+                        if(charPos.y == jumpCurrentHeight){
+                            charStat = stand;
+                        }
                     }
-                }
-                else if(!takingDamage && !isDeath && skillCond && leftBeenPressed){
-                    tmpVelo = 0;
-                    veloX = 0;
-                    leftBeenPressed = false;
-                }
-                break;
+                    else if(skillCond && leftBeenPressed){
+                        tmpVelo = 0;
+                        veloX = 0;
+                        leftBeenPressed = false;
+                    }
+                    break;
 
-            case SDLK_RIGHT:
-                if(!takingDamage && !isDeath && !skillCond && rightBeenPressed){
-                    charRect.x = 0;
-                    veloX -= char_velo;
-                    rightBeenPressed = false;
-                    if(charPos.y == jumpCurrentHeight){
-                        charStat = stand;
+                case SDLK_RIGHT:
+                    if(!skillCond && rightBeenPressed){
+                        charRect.x = 0;
+                        veloX -= char_velo;
+                        rightBeenPressed = false;
+                        if(charPos.y == jumpCurrentHeight){
+                            charStat = stand;
+                        }
                     }
-                }
-                else if(!takingDamage && !isDeath && skillCond && rightBeenPressed){
-                    tmpVelo = 0;
-                    veloX = 0;
-                    rightBeenPressed = false;
-                }
-                break;
+                    else if(skillCond && rightBeenPressed){
+                        tmpVelo = 0;
+                        veloX = 0;
+                        rightBeenPressed = false;
+                    }
+                    break;
+            }
         }
     }
 }
@@ -227,22 +235,20 @@ void player2 :: loadChar()
     }
     if(healthPoints <= 0){
         charStat = die;
-        isDeath = true;
     }
+    player2Body = charPos;
 
     if(charStat == stand){
-        player2Body.h = charPos.h;
-        player2Body.y = charPos.y;
         if(direction == 1){
-            player2Body.w = charPos.w / 2;
-            player2Body.x = charPos.x + player2Body.w;
+            player2Body.w = 0.6 * charPos.w;
+            player2Body.x = charPos.x + charPos.w - player2Body.w;
 
             charTexture = charIMG[0];
             charRect.w = sheetW[0] / 4;
             charRect.h = sheetH[0];
         }
         else if(direction == 2){
-            player2Body.w = 0.75 * charPos.w;
+            player2Body.w = 0.6 * charPos.w;
             player2Body.x = charPos.x;
 
             charTexture = charIMG[1];
@@ -299,6 +305,8 @@ void player2 :: loadChar()
             charRect.h = sheetH[4];
         }
         else if(direction == 2){
+            player2Body.w = 0.75 * charPos.w;
+
             charTexture = charIMG[9];
             charRect.w = sheetW[4] / 6;
             charRect.h = sheetH[4];
@@ -329,17 +337,30 @@ void player2 :: loadChar()
             charRect.h = sheetH[6];
         }
     }
-    if(charStat == die){
-        charPos.w = 80;
+    if(charStat == win){
+        charPos.w = 100;
         if(direction == 1){
             charTexture = charIMG[14];
-            charRect.w = sheetW[7] / 7;
+            charRect.w = sheetW[7] / 6;
             charRect.h = sheetH[7];
         }
         else if(direction == 2){
             charTexture = charIMG[15];
-            charRect.w = sheetW[7] / 7;
+            charRect.w = sheetW[7] / 6;
             charRect.h = sheetH[7];
+        }
+    }
+    if(charStat == die){
+        charPos.w = 80;
+        if(direction == 1){
+            charTexture = charIMG[16];
+            charRect.w = sheetW[8] / 7;
+            charRect.h = sheetH[8];
+        }
+        else if(direction == 2){
+            charTexture = charIMG[17];
+            charRect.w = sheetW[8] / 7;
+            charRect.h = sheetH[8];
         }
     }
 }

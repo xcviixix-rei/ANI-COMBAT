@@ -17,8 +17,6 @@ player1 :: player1(BG bg)
     normalAttackCond = false;
     throwingObjectCond = false;
 
-    takingDamage = isDeath = false;
-
     w = h = 0;
 
     veloX = 0;
@@ -104,13 +102,29 @@ void player1 :: loadIMG(SDL_Renderer* renderer)
     sheetW.push_back(w); sheetH.push_back(h);
     //6
 
-    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/dieLeft.png", renderer);
+    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/winLeft.png", renderer);
     charIMG.push_back(charTexture); // charIMG[14]
-    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/dieRight.png", renderer);
+    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/winRight.png", renderer);
     charIMG.push_back(charTexture); // charIMG[15]
     SDL_QueryTexture(charIMG[14], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //7
+
+    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/dieLeft.png", renderer);
+    charIMG.push_back(charTexture); // charIMG[16]
+    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/dieRight.png", renderer);
+    charIMG.push_back(charTexture); // charIMG[17]
+    SDL_QueryTexture(charIMG[16], NULL, NULL, &w, &h);
+    sheetW.push_back(w); sheetH.push_back(h);
+    //8
+
+    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/kickLeft.png", renderer);
+    charIMG.push_back(charTexture); // charIMG[18]
+    charTexture = loadTexture("character/Naruto/narutoSpriteSheet/kickRight.png", renderer);
+    charIMG.push_back(charTexture); // charIMG[19]
+    SDL_QueryTexture(charIMG[18], NULL, NULL, &w, &h);
+    sheetW.push_back(w); sheetH.push_back(h);
+    //9
 
 /*
     obj1.loadObjectIMG(renderer);
@@ -120,12 +134,12 @@ void player1 :: loadIMG(SDL_Renderer* renderer)
 }
 void player1 :: handleEvent(SDL_Event &e)
 {
-    if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
-    {
-        switch( e.key.keysym.sym )
+    if(charStat != die && charStat != win && charStat != takeDamage && !skillCond){
+        if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
         {
-            case SDLK_a:
-                if(!takingDamage && !isDeath && !skillCond){
+            switch( e.key.keysym.sym )
+            {
+                case SDLK_a:
                     leftBeenPressed = true;
                     charRect.x = 0;
                     veloX -= char_velo;
@@ -133,11 +147,9 @@ void player1 :: handleEvent(SDL_Event &e)
                     if(charPos.y == jumpCurrentHeight){
                         charStat = run;
                     }
-                }
-                break;
+                    break;
 
-            case SDLK_d:
-                if(!takingDamage && !isDeath && !skillCond){
+                case SDLK_d:
                     rightBeenPressed = true;
                     charRect.x = 0;
                     veloX += char_velo;
@@ -145,80 +157,112 @@ void player1 :: handleEvent(SDL_Event &e)
                     if(charPos.y == jumpCurrentHeight){
                         charStat = run;
                     }
-                }
-                break;
+                    break;
 
-            case SDLK_w:
-                if(!takingDamage && !isDeath && charPos.y == jumpCurrentHeight && !skillCond){
-                    charRect.x = 0;
-                    charStat = jumpUp;
-                    veloY = - 1.5 * char_velo;
-                    jumpTime = SDL_GetTicks();
-                }
-                break;
+                case SDLK_w:
+                    if(charPos.y == jumpCurrentHeight){
+                        charRect.x = 0;
+                        charStat = jumpUp;
+                        veloY = - 1.5 * char_velo;
+                        jumpTime = SDL_GetTicks();
+                    }
+                    break;
 
-            case SDLK_r:
-                if(!takingDamage && !isDeath && (SDL_GetTicks() - normalAttackTime >= 80) && (charPos.y == jumpCurrentHeight) && charStat != throwShuriken){
-                    charRect.x = 0;
-                    charStat = normalAttack;
-                    frameTime = SDL_GetTicks();
-                    tmpVelo = veloX;
-                    veloX = 0;
-                    skillCond = true;
-                    normalAttackCond = true;
-                    enemyHPDecreased = true;
-                }
-                break;
+                case SDLK_r:
+                    if((SDL_GetTicks() - normalAttackTime >= 80) && (charPos.y == jumpCurrentHeight)){
+                        charRect.x = 0;
+                        charStat = normalAttack;
+                        frameTime = SDL_GetTicks();
+                        tmpVelo = veloX;
+                        veloX = 0;
+                        skillCond = true;
+                        normalAttackCond = true;
+                        enemyHPDecreased = true;
+                    }
+                    break;
 
-/*            case SDLK_t:
-                if(!takingDamage && !isDeath && (SDL_GetTicks() - throwingObjectTime >= 500) && (charPos.y == jumpCurrentHeight) && charStat != normalAttack){
-                    charRect.x = 0;
-                    charStat = throwShuriken;
-                    frameTime = SDL_GetTicks();
-                    tmpVelo = veloX;
-                    veloX = 0;
-                    skillCond = true;
-                    throwingObjectCond = true;
-                }
-                break; */
+                case SDLK_f:
+                    if((SDL_GetTicks() - normalAttackTime >= 250) && (charPos.y == jumpCurrentHeight)){
+                        charRect.x = 0;
+                        charStat = kick;
+                        frameTime = SDL_GetTicks();
+                        tmpVelo = veloX;
+                        veloX = 0;
+                        skillCond = true;
+                        kickCond = true;
+                        enemyHPDecreased = true;
+                        if(direction == 1) charPos.x -= 30;
+                    }
+                    break;
+
+    /*            case SDLK_t:
+                    if((SDL_GetTicks() - throwingObjectTime >= 500) && (charPos.y == jumpCurrentHeight)){
+                        charRect.x = 0;
+                        charStat = throwShuriken;
+                        frameTime = SDL_GetTicks();
+                        tmpVelo = veloX;
+                        veloX = 0;
+                        skillCond = true;
+                        throwingObjectCond = true;
+                    }
+                    break; */
+            }
+        }
+
+        else if( e.type == SDL_KEYUP && e.key.repeat == 0)
+        {
+            switch( e.key.keysym.sym )
+            {
+                case SDLK_a:
+                    if(leftBeenPressed){
+                        charRect.x = 0;
+                        veloX += char_velo;
+                        leftBeenPressed = false;
+                        if(charPos.y == jumpCurrentHeight){
+                            charStat = stand;
+                        }
+                    }
+                    break;
+
+                case SDLK_d:
+                    if(rightBeenPressed){
+                        charRect.x = 0;
+                        veloX -= char_velo;
+                        rightBeenPressed = false;
+                        if(charPos.y == jumpCurrentHeight){
+                            charStat = stand;
+                        }
+                    }
+                    else if(skillCond && rightBeenPressed){
+                        tmpVelo = 0;
+                        veloX = 0;
+                        rightBeenPressed = false;
+                    }
+                    break;
+            }
         }
     }
-
-    else if( e.type == SDL_KEYUP && e.key.repeat == 0)
-    {
-        switch( e.key.keysym.sym )
+    else if(skillCond){
+        if( e.type == SDL_KEYUP && e.key.repeat == 0)
         {
-            case SDLK_a:
-                if(!takingDamage && !isDeath && !skillCond && leftBeenPressed){
-                    charRect.x = 0;
-                    veloX += char_velo;
-                    leftBeenPressed = false;
-                    if(charPos.y == jumpCurrentHeight){
-                        charStat = stand;
+            switch( e.key.keysym.sym )
+            {
+                case SDLK_a:
+                    if(leftBeenPressed){
+                        tmpVelo = 0;
+                        veloX = 0;
+                        leftBeenPressed = false;
                     }
-                }
-                else if(!takingDamage && !isDeath && skillCond && leftBeenPressed){
-                    tmpVelo = 0;
-                    veloX = 0;
-                    leftBeenPressed = false;
-                }
-                break;
+                    break;
 
-            case SDLK_d:
-                if(!takingDamage && !isDeath && !skillCond && rightBeenPressed){
-                    charRect.x = 0;
-                    veloX -= char_velo;
-                    rightBeenPressed = false;
-                    if(charPos.y == jumpCurrentHeight){
-                        charStat = stand;
+                case SDLK_d:
+                    if(rightBeenPressed){
+                        tmpVelo = 0;
+                        veloX = 0;
+                        rightBeenPressed = false;
                     }
-                }
-                else if(!takingDamage && !isDeath && skillCond && rightBeenPressed){
-                    tmpVelo = 0;
-                    veloX = 0;
-                    rightBeenPressed = false;
-                }
-                break;
+                    break;
+            }
         }
     }
 }
@@ -233,9 +277,7 @@ void player1 :: loadChar()
     }
     if(healthPoints <= 0){
         charStat = die;
-        isDeath = true;
     }
-
     if(charStat == stand){
         if(direction == 1){
             charTexture = charIMG[0];
@@ -327,17 +369,43 @@ void player1 :: loadChar()
             charRect.h = sheetH[6];
         }
     }
-    if(charStat == die){
-        charPos.w = 80;
+    if(charStat == win){
+        charPos.w = 40;
         if(direction == 1){
             charTexture = charIMG[14];
-            charRect.w = sheetW[7] / 7;
+            charRect.w = sheetW[7] / 6;
             charRect.h = sheetH[7];
         }
         else if(direction == 2){
             charTexture = charIMG[15];
-            charRect.w = sheetW[7] / 7;
+            charRect.w = sheetW[7] / 6;
             charRect.h = sheetH[7];
+        }
+    }
+    if(charStat == die){
+        charPos.w = 80;
+        if(direction == 1){
+            charTexture = charIMG[16];
+            charRect.w = sheetW[8] / 7;
+            charRect.h = sheetH[8];
+        }
+        else if(direction == 2){
+            charTexture = charIMG[17];
+            charRect.w = sheetW[8] / 7;
+            charRect.h = sheetH[8];
+        }
+    }
+    if(charStat == kick){
+        charPos.w = 80;
+        if(direction == 1){
+            charTexture = charIMG[18];
+            charRect.w = sheetW[9] / 6;
+            charRect.h = sheetH[9];
+        }
+        else if(direction == 2){
+            charTexture = charIMG[19];
+            charRect.w = sheetW[9] / 6;
+            charRect.h = sheetH[9];
         }
     }
 /*    obj1.loadObject();
@@ -371,6 +439,31 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
             if(direction == 1){
                 charPos.x += 32;
             }
+        }
+    }
+    if(charStat == kick ){
+        if(kickCond){
+            if(direction == 1){
+                veloX = - 0.5 * char_velo;
+            }
+            else if(direction == 2){
+                veloX = 0.5 * char_velo;
+            }
+            SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
+            if(SDL_GetTicks() - frameTime >= 75){
+                charRect.x += charRect.w;
+                frameTime = SDL_GetTicks();
+            }
+            if(charRect.x >= sheetW[9]){
+                charRect.x = 0;
+                veloX = tmpVelo;
+                tmpVelo = NULL;
+                kickCond = false;
+                skillCond = false;
+                enemyHPDecreased = false;
+                charStat = stand;
+            }
+            normalAttackTime = SDL_GetTicks();
         }
     }
     if(charStat == throwShuriken ){

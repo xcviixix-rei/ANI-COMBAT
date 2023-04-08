@@ -16,10 +16,14 @@ enum characterStatus
     jumpUp,
     fallDown,
     normalAttack,
-    throwShuriken,
-    getsugaTenshou,
     takeDamage,
-    die
+    die,
+    win,
+
+    throwShuriken,
+    kick,
+
+    getsugaTenshou
 };
 
 class CRT
@@ -56,7 +60,6 @@ class CRT
 
         bool leftBeenPressed, rightBeenPressed;
         bool skillCond, normalAttackCond, throwingObjectCond;
-        bool takingDamage, isDeath;
         bool enemyHPDecreased;
 
         Uint32 startTime, frameTime;

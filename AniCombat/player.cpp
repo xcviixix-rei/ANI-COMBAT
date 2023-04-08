@@ -57,7 +57,7 @@ void CRT :: render(SDL_Renderer* renderer)
         charRect.x = 0;
         previousCharStat = charStat;
     }
-    if(!takingDamage && !isDeath){
+    if(charStat != takeDamage && charStat != die){
         if(!skillCond){
             if(charStat == stand){
                 SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
@@ -107,25 +107,34 @@ void CRT :: render(SDL_Renderer* renderer)
             renderSkill(renderer);
         }
     }
-    else if(takingDamage && !isDeath){
+    else if(charStat != die && charStat == takeDamage){
         charRect.x = (takeDamageCount - 1) * charRect.w;
         SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
         if(SDL_GetTicks() - takingDamageTime >= 200){
-            takingDamage = false;
             charStat = stand;
             charRect.x = 0;
         }
         if(takeDamageCount > 4) takeDamageCount = 1;
     }
-    else if(isDeath){
+    else if(charStat == die){
         SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
-        if(charRect.x < sheetW[7] - charRect.w){
+        if(charRect.x < sheetW[8] - charRect.w){
             if(SDL_GetTicks() - frameTime >= 100){
                 charRect.x += charRect.w;
                 frameTime = SDL_GetTicks();
             }
             if(direction == 1) charPos.x += 4;
             else if(direction == 2) charPos.x -= 4;
+        }
+    }
+    if(charStat == win){
+        SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
+        if(SDL_GetTicks() - frameTime >= 120){
+            charRect.x += charRect.w;
+            frameTime = SDL_GetTicks();
+        }
+        if(charRect.x >= sheetW[7]){
+            charRect.x = 3 * charRect.w;
         }
     }
     previousCharStat = charStat;

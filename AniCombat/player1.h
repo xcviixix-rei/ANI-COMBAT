@@ -11,6 +11,7 @@ class player1 : public CRT
         player1(BG background);
 
         //player1Object obj1, obj2, obj3;
+        bool kickCond;
 
         void initplayer1();
         void loadChar();
