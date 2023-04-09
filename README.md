@@ -114,7 +114,7 @@
     <a href="https://twitter.com/xcviixix_rei?t=cYzqie-s58pZZy2s0C_vXg&s=09">
       <img src="https://i.ibb.co/xsyHYjV/twitter.png" alt="twitter" width="80" height="80"/>
     </a>
-    <a href="[22028272@vnu.edu.vn](https://ibb.co/wK59sRM)">
+    <a href="https://ibb.co/wK59sRM">
       <img src="https://i.ibb.co/Qb38s2v/logo-gmail-png-gmail-icon-download-png-and-vector-1.png" alt="logo-gmail-png-gmail-icon-download-png-and-vector-1" width="80" height="80"/>
     </a>
   </div>
