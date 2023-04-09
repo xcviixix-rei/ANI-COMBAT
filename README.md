@@ -10,15 +10,15 @@
 # KHI HAI VŨ TRỤ ANIME NARUTO VÀ BLEACH KẾT NỐI, TRẬN CHIẾN TRANH ĐOẠT VỊ TRÍ MẠNH NHẤT XẢY RA !!! AI SẼ LÀ KẺ VƯỢT QUA TẤT CẢ, SỬ DỤNG SỨC MẠNH VÔ ĐỊCH CHÈN ÉP ĐỐI PHƯƠNG, XỨNG VỚI VỊ TRÍ SỐ 1? SẼ LÀ UZUMAKI NARUTO, HAY LÀ KUROSAKI ICHIGO? HÃY ĐẾN VỚI `ANI_COMBAT`, SỬ DỤNG KĨ NĂNG CỦA MÌNH VÀ CHỨNG MINH *BẠN LÀ NGƯỜI MẠNH NHẤT*!
 
 ## Table of Contents  
-[MÔ TẢ](https://github.com/xcviixix-rei/ANI-COMBAT/edit/main/README.md#m%C3%B4-t%E1%BA%A3)
+[MÔ TẢ](https://github.com/xcviixix-rei/ANI-COMBAT/blob/main/README.md#m%C3%B4-t%E1%BA%A3)
 
-[LUẬT CHƠI](https://github.com/xcviixix-rei/ANI-COMBAT/edit/main/README.md#lu%E1%BA%ADt-ch%C6%A1i)
+[LUẬT CHƠI](https://github.com/xcviixix-rei/ANI-COMBAT/blob/main/README.md#lu%E1%BA%ADt-ch%C6%A1i)
 
-[CÁCH CHƠI](https://github.com/xcviixix-rei/ANI-COMBAT/edit/main/README.md#c%C3%A1ch-ch%C6%A1i)
+[CÁCH CHƠI](https://github.com/xcviixix-rei/ANI-COMBAT/blob/main/README.md#c%C3%A1ch-ch%C6%A1i)
 
-[HƯỚNG DẪN CÀI ĐẶT](https://github.com/xcviixix-rei/ANI-COMBAT/edit/main/README.md#h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-d%E1%BA%B7t)
+[HƯỚNG DẪN CÀI ĐẶT](https://github.com/xcviixix-rei/ANI-COMBAT/blob/main/README.md#h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%C3%A0i-d%E1%BA%B7t)
 
-[CREDITS](https://github.com/xcviixix-rei/ANI-COMBAT/edit/main/README.md#credits)
+[CREDITS](https://github.com/xcviixix-rei/ANI-COMBAT/blob/main/README.md#credits)
 
 ---
 
