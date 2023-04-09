@@ -63,6 +63,7 @@
 ---
 
 # HƯỚNG DẪN CÀI DẶT:
+  - **CÁC BẠN CÓ THỂ TẢI FILE** [ANI-COMBAT.demo.zip](https://github.com/xcviixix-rei/ANI-COMBAT/releases/download/v1.0.0-demo/ANI-COMBAT.demo.zip) **TẠI ĐÂY HOẶC LÀM THEO CÁC BƯỚC SAU:**
   - Truy cập phần release trong repository ANI-COMBAT:
     <p align="center">
       <img src="https://i.ibb.co/0Mqs7Gh/Screenshot-89.png" width="600" height="450"/>
@@ -87,4 +88,36 @@
 
 ---
 
-# Credits
+# CREDITS
+## Thư viện đồ họa sử dụng
+  - SDL_2
+## Map:
+  - Map materials: [>>DoB<<](https://spritedatabase.net/file/1075)
+  - Map editor: [NGUYỄN NHẬT PHONG](https://github.com/xcviixix-rei)
+## Characters:
+  - Naruto: [NEIMAD](https://spritedatabase.net/file/1008)
+  - Ichigo: [NEIMAD](https://spritedatabase.net/file/915)
+  - Characters editor: [NGUYỄN NHẬT PHONG](https://github.com/xcviixix-rei)
+## Theme song:
+  - [DUALEDGE](https://spritedatabase.net/file/904)
+## Xây dựng và phát triển bởi [NGUYỄN NHẬT PHONG](https://github.com/xcviixix-rei)
+  <div id="header" align="center">
+    <img src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="400"/>
+  </div>
+  <div id="badges" align="center">
+    <a href="https://www.facebook.com/xcviixix?mibextid=ZbWKwL">
+      <img src="https://i.ibb.co/ZJpS0DC/facebook-app-icon.png" alt="facebook-app-icon" width="80" height="80"/>
+    </a>
+    <a href="https://instagram.com/xcviixix_rei?igshid=MTIzZWQxMDU=">
+      <img src="https://i.ibb.co/ct2d2yT/ig.png" alt="ig" width="80" height="80"/>
+    </a>
+    <a href="https://twitter.com/xcviixix_rei?t=cYzqie-s58pZZy2s0C_vXg&s=09">
+      <img src="https://i.ibb.co/xsyHYjV/twitter.png" alt="twitter" width="80" height="80"/>
+    </a>
+    <a href="22028272@vnu.edu.vn">
+      <img src="https://i.ibb.co/Qb38s2v/logo-gmail-png-gmail-icon-download-png-and-vector-1.png" alt="logo-gmail-png-gmail-icon-download-png-and-vector-1" width="80" height="80"/>
+    </a>
+  </div>
+---
+
+> Game được lập trình trên CodeBlocks bằng ngôn ngữ C++
