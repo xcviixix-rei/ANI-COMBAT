@@ -416,7 +416,7 @@ void player1 :: loadChar()
 
 void player1 :: renderSkill(SDL_Renderer* renderer)
 {
-    if(charStat == normalAttack ){
+    if(charStat == normalAttack){
         if(normalAttackCond){
             if(direction == 1){
                 charPos.x -= 32;
@@ -443,16 +443,21 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
     }
     if(charStat == kick ){
         if(kickCond){
+            veloY = 0;
             if(direction == 1){
-                veloX = - 0.75 * char_velo;
+                veloX = - 1.75 * char_velo;
             }
             else if(direction == 2){
-                veloX = 0.75 * char_velo;
+                veloX = 1.75 * char_velo;
             }
             SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
             if(SDL_GetTicks() - frameTime >= 75){
                 charRect.x += charRect.w;
                 frameTime = SDL_GetTicks();
+            }
+            if(charRect.x >= 3 * charRect.w){
+                veloX = tmpVelo;
+                tmpVelo = NULL;
             }
             if(charRect.x >= sheetW[9]){
                 charRect.x = 0;
@@ -461,7 +466,7 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
                 kickCond = false;
                 skillCond = false;
                 enemyHPDecreased = false;
-                charStat = stand;
+                charStat = fallDown;
             }
             normalAttackTime = SDL_GetTicks();
         }

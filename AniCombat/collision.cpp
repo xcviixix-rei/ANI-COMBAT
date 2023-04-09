@@ -12,6 +12,7 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
             else if(plr2.direction == 2) plr2.direction = 1;
         }
         plr2.charStat = takeDamage;
+        plr2.skillCond = false;
         plr2.veloX = 0;
         plr2.veloY = 2;
         plr2.leftBeenPressed = plr2.rightBeenPressed = false;
@@ -24,9 +25,15 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
                 plr2.charPos.x -= 30;
                 plr1.charPos.x -= 20;
             }
-            if(plr1.normalAttackCond) plr2.healthPoints -= 1.2 * plr1.damage;
-            else if(plr1.kickCond) plr2.healthPoints -= 1.6 * plr1.damage;
-            plr2.takingDamageTime = SDL_GetTicks();
+            if(plr1.normalAttackCond){
+                plr2.healthPoints -= 1.2 * plr1.damage;
+                plr2.takingDamageTime = 200;
+            }
+            else if(plr1.kickCond){
+                plr2.healthPoints -= 1.6 * plr1.damage;
+                plr2.takingDamageTime = 1000;
+            }
+            plr2.timeSinceTakenDamage = SDL_GetTicks();
             plr1.enemyHPDecreased = false;
             plr2.takeDamageCount ++;
         }
@@ -39,6 +46,7 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
         }
         if(plr2.normalAttackCond){
             plr1.charStat = takeDamage;
+            plr1.skillCond = false;
             plr1.veloX = 0;
             plr1.veloY = 2;
             plr1.leftBeenPressed = plr1.rightBeenPressed = false;
@@ -51,8 +59,11 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
                     plr1.charPos.x -= 30;
                     plr2.charPos.x -= 20;
                 }
-                plr1.healthPoints -= plr2.damage;
-                plr1.takingDamageTime = SDL_GetTicks();
+                if(plr2.normalAttackCond){
+                    plr1.healthPoints -= plr2.damage;
+                    plr1.takingDamageTime = 200;
+                }
+                plr1.timeSinceTakenDamage = SDL_GetTicks();
                 plr2.enemyHPDecreased = false;
                 plr1.takeDamageCount ++;
             }

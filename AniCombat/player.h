@@ -51,6 +51,7 @@ class CRT
         int w, h;
         int jumpCurrentHeight;
         int direction;
+        int takingDamageTime;
         // 1 la left, 2 la right
         vector <int> sheetW, sheetH;
 
@@ -64,7 +65,7 @@ class CRT
 
         Uint32 startTime, frameTime;
         Uint32 jumpTime, normalAttackTime, throwingObjectTime;
-        Uint32 takingDamageTime;
+        Uint32 timeSinceTakenDamage;
 
         void loadSfx();
 
