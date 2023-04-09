@@ -11,7 +11,7 @@
 ## KHI HAI VŨ TRỤ ANIME NARUTO VÀ BLEACH KẾT NỐI, TRẬN CHIẾN TRANH ĐOẠT VỊ TRÍ MẠNH NHẤT XẢY RA !!! AI SẼ LÀ KẺ VƯỢT QUA TẤT CẢ, SỬ DỤNG SỨC MẠNH VÔ ĐỊCH CHÈN ÉP ĐỐI PHƯƠNG, XỨNG VỚI VỊ TRÍ SỐ 1? SẼ LÀ UZUMAKI NARUTO, HAY LÀ KUROSAKI ICHIGO? HÃY ĐẾN VỚI `ANI_COMBAT`, SỬ DỤNG KĨ NĂNG CỦA MÌNH VÀ CHỨNG MINH *BẠN LÀ NGƯỜI MẠNH NHẤT*!
   - ANI-COMBAT được xây dựng và phát triển dựa trên tựa game nổi tiếng Bleach VS Naruto:
     <p align="center">
-        <img src="https://i.rada.vn/data/image/2022/07/13/Bleach-vs-Naruto-700.jpg" width="600" height="450"/>
+        <img src="https://i.rada.vn/data/image/2022/07/13/Bleach-vs-Naruto-700.jpg" width="600" height="300"/>
     </p>
   - Game ANI-COMBAT thuộc thể loại game dối kháng với lối chơi kinh điển, nơi mà 2 người chơi hóa thân thành nhân vật của mình để tiêu diệt đối thủ
     <p align="center">
@@ -63,4 +63,28 @@
 ---
 
 # HƯỚNG DẪN CÀI DẶT:
-  - Truy cập repository ANI-COMBAT
+  - Truy cập phần release trong repository ANI-COMBAT:
+    <p align="center">
+      <img src="https://i.ibb.co/0Mqs7Gh/Screenshot-89.png" width="600" height="450"/>
+    </p>
+  - Truy cập vào bản release đầu tiên, có chữ latest màu xanh bên cạnh:
+    <p align="center">
+      <img src="https://i.ibb.co/S68HWqh/Screenshot-90.png" width="600" height="450"/>
+    </p>
+  - Click vào dòng ANI-COMBAT.demo.zip để tải file zip về:
+    <p align="center">
+      <img src="https://i.ibb.co/qWbm6rM/Screenshot-91.png" width="600" height="450"/>
+    </p>
+  - Giải nén file zip đã tải về:
+    <p align="center">
+      <img src="https://i.ibb.co/bLzTjqh/Screenshot-92.png" width="600" height="450"/>
+    </p>
+  - Mở file AniCombat.exe để chơi:
+    <p align="center">
+      <img src="https://i.ibb.co/HpwsQ08/Screenshot-93.png" width="600" height="450"/>
+    </p>
+  - **CHÚC CÁC BẠN CHƠI GAME VUI VẺ!!**
+
+---
+
+# Credits
