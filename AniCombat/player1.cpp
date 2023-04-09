@@ -444,10 +444,10 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
     if(charStat == kick ){
         if(kickCond){
             if(direction == 1){
-                veloX = - 0.5 * char_velo;
+                veloX = - 0.75 * char_velo;
             }
             else if(direction == 2){
-                veloX = 0.5 * char_velo;
+                veloX = 0.75 * char_velo;
             }
             SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
             if(SDL_GetTicks() - frameTime >= 75){

@@ -25,7 +25,7 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
                 plr1.charPos.x -= 20;
             }
             if(plr1.normalAttackCond) plr2.healthPoints -= 1.2 * plr1.damage;
-            else if(plr1.kickCond) plr2.healthPoints -= 1.5 * plr1.damage;
+            else if(plr1.kickCond) plr2.healthPoints -= 1.6 * plr1.damage;
             plr2.takingDamageTime = SDL_GetTicks();
             plr1.enemyHPDecreased = false;
             plr2.takeDamageCount ++;

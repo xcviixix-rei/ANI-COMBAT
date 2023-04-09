@@ -111,7 +111,7 @@ void CRT :: render(SDL_Renderer* renderer)
         charRect.x = (takeDamageCount - 1) * charRect.w;
         SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
         if(SDL_GetTicks() - takingDamageTime >= 200){
-            charStat = stand;
+            charStat = fallDown;
             charRect.x = 0;
         }
         if(takeDamageCount > 4) takeDamageCount = 1;
