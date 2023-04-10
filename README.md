@@ -67,6 +67,7 @@
   - `>` : di chuyển sang phải
   - `^` : nhảy lên
   - `I` : đánh thường (gây ra 25 dmg)
+  - `K` : lao về trước chém (gây ra 50 dmg)
   ## CHÚ Ý
   - Kẻ địch bị đánh trúng nếu bạn đang tấn công và chạm được vào chúng
   - Trong lúc sử dụng chiêu không thể di chuyển hay dùng chiêu khác
@@ -77,7 +78,7 @@
 ---
 
 # HƯỚNG DẪN CÀI DẶT:
-  - **CÁC BẠN CÓ THỂ TẢI FILE** [ANI-COMBAT.demo.zip](https://github.com/xcviixix-rei/ANI-COMBAT/releases/download/v1.0.0-demo/ANI_COMBAT.demo.zip) **TẠI ĐÂY HOẶC LÀM THEO CÁC BƯỚC SAU:**
+## **CÁC BẠN CÓ THỂ TẢI FILE** [ANI-COMBAT.demo.zip](https://github.com/xcviixix-rei/ANI-COMBAT/releases/download/v1.0.0-demo/ANI-COMBAT.demo.zip) **TẠI ĐÂY HOẶC LÀM THEO CÁC BƯỚC SAU:**
   - Truy cập phần release trong repository ANI-COMBAT:
     <p align="center">
       <img src="https://i.ibb.co/0Mqs7Gh/Screenshot-89.png" width="600" height="450"/>
