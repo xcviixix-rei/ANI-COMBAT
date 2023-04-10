@@ -14,8 +14,9 @@ player1 :: player1(BG bg)
     leftBeenPressed = rightBeenPressed = false;
 
     skillCond = false;
-    normalAttackCond = false;
     throwingObjectCond = false;
+
+    waitToPose = true;
 
     w = h = 0;
 
@@ -23,6 +24,7 @@ player1 :: player1(BG bg)
     veloY = 0;
 
     jumpTime = SDL_GetTicks();
+    kickTime = SDL_GetTicks();
     normalAttackTime = SDL_GetTicks();
     throwingObjectTime = SDL_GetTicks();
 
@@ -176,20 +178,18 @@ void player1 :: handleEvent(SDL_Event &e)
                         tmpVelo = veloX;
                         veloX = 0;
                         skillCond = true;
-                        normalAttackCond = true;
                         enemyHPDecreased = true;
                     }
                     break;
 
                 case SDLK_f:
-                    if((SDL_GetTicks() - normalAttackTime >= 250) && (charPos.y == jumpCurrentHeight)){
+                    if((SDL_GetTicks() - kickTime >= 250) && (charPos.y == jumpCurrentHeight)){
                         charRect.x = 0;
                         charStat = kick;
                         frameTime = SDL_GetTicks();
                         tmpVelo = veloX;
                         veloX = 0;
                         skillCond = true;
-                        kickCond = true;
                         enemyHPDecreased = true;
                         if(direction == 1) charPos.x -= 30;
                     }
@@ -233,11 +233,6 @@ void player1 :: handleEvent(SDL_Event &e)
                             charStat = stand;
                         }
                     }
-                    else if(skillCond && rightBeenPressed){
-                        tmpVelo = 0;
-                        veloX = 0;
-                        rightBeenPressed = false;
-                    }
                     break;
             }
         }
@@ -278,6 +273,8 @@ void player1 :: loadChar()
     if(healthPoints <= 0){
         charStat = die;
     }
+    if(SDL_GetTicks() - waitTimeToPose > 2000 && !waitToPose) charStat = win;
+
     if(charStat == stand){
         if(direction == 1){
             charTexture = charIMG[0];
@@ -384,6 +381,9 @@ void player1 :: loadChar()
     }
     if(charStat == die){
         charPos.w = 80;
+        charPos.y = jumpCurrentHeight - 30;
+        charPos.h = char_height + 30;
+
         if(direction == 1){
             charTexture = charIMG[16];
             charRect.w = sheetW[8] / 7;
@@ -417,60 +417,54 @@ void player1 :: loadChar()
 void player1 :: renderSkill(SDL_Renderer* renderer)
 {
     if(charStat == normalAttack){
-        if(normalAttackCond){
-            if(direction == 1){
-                charPos.x -= 32;
-            }
-            SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
-            if(SDL_GetTicks() - frameTime >= 50){
-                charRect.x += charRect.w;
-                frameTime = SDL_GetTicks();
-            }
-            if(charRect.x >= sheetW[4]){
-                charRect.x = 0;
-                veloX = tmpVelo;
-                tmpVelo = NULL;
-                normalAttackCond = false;
-                skillCond = false;
-                enemyHPDecreased = false;
-                charStat = stand;
-            }
-            normalAttackTime = SDL_GetTicks();
-            if(direction == 1){
-                charPos.x += 32;
-            }
+        if(direction == 1){
+            charPos.x -= 32;
+        }
+        SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
+        if(SDL_GetTicks() - frameTime >= 50){
+            charRect.x += charRect.w;
+            frameTime = SDL_GetTicks();
+        }
+        if(charRect.x >= sheetW[4]){
+            charRect.x = 0;
+            veloX = tmpVelo;
+            tmpVelo = NULL;
+            skillCond = false;
+            enemyHPDecreased = false;
+            charStat = stand;
+        }
+        normalAttackTime = SDL_GetTicks();
+        if(direction == 1){
+            charPos.x += 32;
         }
     }
     if(charStat == kick ){
-        if(kickCond){
-            veloY = 0;
+        veloY = 0;
+        SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
+        if(SDL_GetTicks() - frameTime >= 75){
+            charRect.x += charRect.w;
+            frameTime = SDL_GetTicks();
+        }
+        if(charRect.x < 3 * charRect.w){
             if(direction == 1){
                 veloX = - 1.75 * char_velo;
             }
             else if(direction == 2){
                 veloX = 1.75 * char_velo;
             }
-            SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
-            if(SDL_GetTicks() - frameTime >= 75){
-                charRect.x += charRect.w;
-                frameTime = SDL_GetTicks();
-            }
-            if(charRect.x >= 3 * charRect.w){
-                veloX = tmpVelo;
-                tmpVelo = NULL;
-            }
-            if(charRect.x >= sheetW[9]){
-                charRect.x = 0;
-                veloX = tmpVelo;
-                tmpVelo = NULL;
-                kickCond = false;
-                skillCond = false;
-                enemyHPDecreased = false;
-                charStat = fallDown;
-            }
-            normalAttackTime = SDL_GetTicks();
         }
+        else veloX = 0;
+        if(charRect.x >= sheetW[9]){
+            charRect.x = 0;
+            veloX = tmpVelo;
+            tmpVelo = NULL;
+            skillCond = false;
+            enemyHPDecreased = false;
+            charStat = fallDown;
+        }
+        kickTime = SDL_GetTicks();
     }
+/*
     if(charStat == throwShuriken ){
         if(throwingObjectCond){
             SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
@@ -478,11 +472,11 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
                 charRect.x += charRect.w;
                 frameTime = SDL_GetTicks();
             }
-            /*if(charRect.x == 4 * charRect.w){
+            if(charRect.x == 4 * charRect.w){
                 if(obj1.objectCond) obj1.initObjectPosition(direction, charPos);
                 if(obj2.objectCond && !obj1.objectCond) obj2.initObjectPosition(direction, charPos);
                 if(obj3.objectCond && !obj2.objectCond) obj3.initObjectPosition(direction, charPos);
-            }*/
+            }
             if(charRect.x >= sheetW[5]){
                 charRect.x = 0;
                 veloX = tmpVelo;
@@ -494,6 +488,7 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
             throwingObjectTime = SDL_GetTicks();
         }
     }
+*/
 }
 /*
 void player1 :: renderObject(SDL_Renderer* renderer)

@@ -23,7 +23,8 @@ enum characterStatus
     throwShuriken,
     kick,
 
-    getsugaTenshou
+    getsugaTenshou,
+    hackUp
 };
 
 class CRT
@@ -60,12 +61,14 @@ class CRT
         characterStatus charStat, previousCharStat;
 
         bool leftBeenPressed, rightBeenPressed;
-        bool skillCond, normalAttackCond, throwingObjectCond;
+        bool skillCond, throwingObjectCond;
         bool enemyHPDecreased;
+        bool waitToPose;
 
         Uint32 startTime, frameTime;
         Uint32 jumpTime, normalAttackTime, throwingObjectTime;
         Uint32 timeSinceTakenDamage;
+        Uint32 waitTimeToPose;
 
         void loadSfx();
 

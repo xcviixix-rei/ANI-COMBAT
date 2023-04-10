@@ -109,6 +109,7 @@ void CRT :: render(SDL_Renderer* renderer)
         }
     }
     else if(charStat != die && charStat == takeDamage){
+        veloY = 0;
         charRect.x = (takeDamageCount - 1) * charRect.w;
         SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
         if(SDL_GetTicks() - timeSinceTakenDamage >= takingDamageTime){
@@ -125,8 +126,8 @@ void CRT :: render(SDL_Renderer* renderer)
                 charRect.x += charRect.w;
                 frameTime = SDL_GetTicks();
             }
-            if(direction == 1) charPos.x += 4;
-            else if(direction == 2) charPos.x -= 4;
+            if(direction == 1) charPos.x += 5;
+            else if(direction == 2) charPos.x -= 5;
         }
     }
     if(charStat == win){
@@ -147,36 +148,56 @@ void CRT :: checkJumpPlace()
     if(!skillCond && charStat != takeDamage){
         if( (charPos.y + char_height >= background.jumpPlacePos[4].y - 2 ) && (charPos.y + char_height <= background.jumpPlacePos[4].y + 10) && (charPos.x + char_width / 3 >= background.jumpPlacePos[4].x ) ){
             if(veloY > 0){
+                charStat = stand;
+                charRect.x = 0;
                 veloY = 0;
                 jumpTime = SDL_GetTicks();
+                frameTime = SDL_GetTicks();
+                jumpCurrentHeight = charPos.y;
                 charPos.y = background.jumpPlacePos[4].y - char_height + 4;
             }
         }
         else if( (charPos.y + char_height >= background.jumpPlacePos[3].y - 2) && (charPos.y + char_height <= background.jumpPlacePos[3].y + 10) && (charPos.x + char_width / 3 <= background.jumpPlacePos[3].w ) ){
             if(veloY > 0){
+                charStat = stand;
+                charRect.x = 0;
                 veloY = 0;
                 jumpTime = SDL_GetTicks();
+                frameTime = SDL_GetTicks();
+                jumpCurrentHeight = charPos.y;
                 charPos.y = background.jumpPlacePos[3].y - char_height + 4;
             }
         }
         else if( (charPos.y + char_height >= background.jumpPlacePos[2].y - 2) && (charPos.y + char_height <= background.jumpPlacePos[2].y + 10) && (charPos.x + char_width / 3 >= background.jumpPlacePos[2].x ) ){
             if(veloY > 0){
+                charStat = stand;
+                charRect.x = 0;
                 veloY = 0;
                 jumpTime = SDL_GetTicks();
+                frameTime = SDL_GetTicks();
+                jumpCurrentHeight = charPos.y;
                 charPos.y = background.jumpPlacePos[2].y - char_height + 4;
             }
         }
         else if( (charPos.y + char_height >= background.jumpPlacePos[1].y - 2) && (charPos.y + char_height <= background.jumpPlacePos[1].y + 10) && (charPos.x + char_width / 3 <= background.jumpPlacePos[1].w ) ){
             if(veloY > 0){
+                charStat = stand;
+                charRect.x = 0;
                 veloY = 0;
                 jumpTime = SDL_GetTicks();
+                frameTime = SDL_GetTicks();
+                jumpCurrentHeight = charPos.y;
                 charPos.y = background.jumpPlacePos[1].y - char_height + 4;
             }
         }
         else if( (charPos.y + char_height >= background.jumpPlacePos[0].y - 4) && (charPos.y + char_height <= background.jumpPlacePos[0].y + 12) && (charPos.x + char_width / 3 >= background.jumpPlacePos[0].x ) && (charPos.x + char_width / 3 <= background.jumpPlacePos[0].x + background.jumpPlacePos[0].w )){
             if(veloY > 0){
+                charStat = stand;
+                charRect.x = 0;
                 veloY = 0;
                 jumpTime = SDL_GetTicks();
+                frameTime = SDL_GetTicks();
+                jumpCurrentHeight = charPos.y;
                 charPos.y = background.jumpPlacePos[0].y - char_height + 4;
             }
         }
@@ -197,18 +218,8 @@ void CRT :: checkJumpPlace()
             charRect.x = 0;
             frameTime = SDL_GetTicks();
         }
-        if(veloY > 0){
-            previousVeloY = veloY;
-        }
-        if(previousVeloY > 0 && veloY == 0){
-            previousVeloY = 0;
-            jumpCurrentHeight = charPos.y;
-            jumpTime = SDL_GetTicks();
-            charRect.x = 0;
-            charStat = stand;
-            frameTime = SDL_GetTicks();
-        }
         previousVeloX = veloX;
+        if(veloY > 0) previousVeloY = veloY;
     }
 }
 

@@ -25,13 +25,13 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
                 plr2.charPos.x -= 30;
                 plr1.charPos.x -= 20;
             }
-            if(plr1.normalAttackCond){
+            if(plr1.charStat == normalAttack){
                 plr2.healthPoints -= 1.2 * plr1.damage;
                 plr2.takingDamageTime = 200;
             }
-            else if(plr1.kickCond){
+            else if(plr1.charStat == kick){
                 plr2.healthPoints -= 1.6 * plr1.damage;
-                plr2.takingDamageTime = 1000;
+                plr2.takingDamageTime = 500;
             }
             plr2.timeSinceTakenDamage = SDL_GetTicks();
             plr1.enemyHPDecreased = false;
@@ -44,39 +44,47 @@ void collisionBetweenPlayer(player1 &plr1, player2 &plr2)
             if(plr1.direction == 1) plr1.direction = 2;
             else if(plr1.direction == 2) plr1.direction = 1;
         }
-        if(plr2.normalAttackCond){
-            plr1.charStat = takeDamage;
-            plr1.skillCond = false;
-            plr1.veloX = 0;
-            plr1.veloY = 2;
-            plr1.leftBeenPressed = plr1.rightBeenPressed = false;
-            if(plr2.enemyHPDecreased && plr1.healthPoints > 0){
-                if(plr1.direction == 1){
-                    plr1.charPos.x += 30;
-                    plr2.charPos.x += 20;
-                }
-                else if(plr1.direction == 2){
-                    plr1.charPos.x -= 30;
-                    plr2.charPos.x -= 20;
-                }
-                if(plr2.normalAttackCond){
-                    plr1.healthPoints -= plr2.damage;
-                    plr1.takingDamageTime = 200;
-                }
-                plr1.timeSinceTakenDamage = SDL_GetTicks();
-                plr2.enemyHPDecreased = false;
-                plr1.takeDamageCount ++;
+        plr1.charStat = takeDamage;
+        plr1.skillCond = false;
+        plr1.veloX = 0;
+        plr1.veloY = 2;
+        plr1.leftBeenPressed = plr1.rightBeenPressed = false;
+        if(plr2.enemyHPDecreased && plr1.healthPoints > 0){
+            if(plr1.direction == 1){
+                plr1.charPos.x += 30;
+                plr2.charPos.x += 20;
             }
+            else if(plr1.direction == 2){
+                plr1.charPos.x -= 30;
+                plr2.charPos.x -= 20;
+            }
+            if(plr2.charStat == normalAttack){
+                plr1.healthPoints -= plr2.damage;
+                plr1.takingDamageTime = 200;
+            }
+            else if(plr2.charStat == hackUp){
+                plr1.healthPoints -= 2 * plr2.damage;
+                plr1.takingDamageTime = 500;
+            }
+            plr1.timeSinceTakenDamage = SDL_GetTicks();
+            plr2.enemyHPDecreased = false;
+            plr1.takeDamageCount ++;
         }
     }
 
     if(plr1.healthPoints > 0 && plr2.healthPoints <= 0){
-        plr1.charStat = win;
         plr2.charStat = die;
+        if(plr1.waitToPose){
+            plr1.waitTimeToPose = SDL_GetTicks();
+            plr1.waitToPose = false;
+        }
     }
     else if(plr2.healthPoints > 0 && plr1.healthPoints <= 0){
-        plr2.charStat = win;
         plr1.charStat = die;
+        if(plr2.waitToPose){
+            plr2.waitTimeToPose = SDL_GetTicks();
+            plr2.waitToPose = false;
+        }
     }
 }
 

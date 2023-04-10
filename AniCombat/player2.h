@@ -11,6 +11,8 @@ class player2 : public CRT
 
         SDL_Rect player2Body;
 
+        Uint32 hackUpTime;
+
         void initplayer2();
         void loadChar();
         void loadIMG(SDL_Renderer* renderer);
