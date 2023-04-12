@@ -60,14 +60,14 @@
   - `A` : di chuyển sang trái
   - `D` : di chuyển sang phải
   - `W` : nhảy lên
-  - `R` : đánh thường (gây ra 30 dmg)
-  - `F` : lao lên trước và đá (gây ra 40 dmg)
+  - `J` : đánh thường (gây ra 30 dmg)
+  - `U` : lao lên trước và đá (gây ra 40 dmg)
   ## PLAYER 2 (KUROSAKI ICHIGO):
   - `<` : di chuyển sang trái
   - `>` : di chuyển sang phải
   - `^` : nhảy lên
-  - `I` : đánh thường (gây ra 25 dmg)
-  - `K` : lao về trước chém (gây ra 50 dmg)
+  - `1` : đánh thường (gây ra 25 dmg)
+  - `4` : lao về trước chém (gây ra 50 dmg)
   ## CHÚ Ý
   - Kẻ địch bị đánh trúng nếu bạn đang tấn công và chạm được vào chúng
   - Trong lúc sử dụng chiêu không thể di chuyển hay dùng chiêu khác
