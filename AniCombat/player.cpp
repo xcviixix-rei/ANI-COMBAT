@@ -131,7 +131,12 @@ void CRT :: render(SDL_Renderer* renderer)
         }
     }
     if(charStat == win){
+        winnerPos.x = charPos.x - (winnerPos.w - charPos.w) / 2;
+        winnerPos.y = charPos.y - winnerPos.h - 20;
+
         SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
+        SDL_RenderCopy(renderer, winner, NULL, &winnerPos);
+
         if(SDL_GetTicks() - frameTime >= 120){
             charRect.x += charRect.w;
             frameTime = SDL_GetTicks();

@@ -127,6 +127,10 @@ void player2 :: loadIMG(SDL_Renderer* renderer)
     SDL_QueryTexture(charIMG[18], NULL, NULL, &w, &h);
     sheetW.push_back(w); sheetH.push_back(h);
     //9
+
+    winner = loadTexture("character/winner.png", renderer);
+    winnerPos.w = 100;
+    winnerPos.h = 22;
 }
 void player2 :: handleEvent(SDL_Event &e)
 {
@@ -165,7 +169,7 @@ void player2 :: handleEvent(SDL_Event &e)
                     }
                     break;
 
-                case SDLK_i:
+                case SDLK_KP_1:
                     if((SDL_GetTicks() - normalAttackTime >= 80) && (charPos.y == jumpCurrentHeight)){
                         charRect.x = 0;
                         charStat = normalAttack;
@@ -177,7 +181,7 @@ void player2 :: handleEvent(SDL_Event &e)
                     }
                     break;
 
-                case SDLK_k:
+                case SDLK_KP_4:
                     if((SDL_GetTicks() - hackUpTime >= 250) && (charPos.y == jumpCurrentHeight)){
                         charRect.x = 0;
                         charStat = hackUp;

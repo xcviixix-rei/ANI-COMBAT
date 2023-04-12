@@ -12,7 +12,7 @@ void logSDLError(ostream& os, const string &msg, bool fatal)
     }
 }
 
-void initSDL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, const string WINDOW_TITLE, SDL_Window* &window, SDL_Renderer* &renderer)
+void initSDL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, const string WINDOW_TITLE, SDL_Window* &window, SDL_Renderer* &renderer, int &refreshRate)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING ) < 0)
         logSDLError(cout, "SDL_Init", true);
@@ -36,6 +36,14 @@ void initSDL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, const string WINDO
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
+
+    SDL_DisplayMode current;
+    if (SDL_GetCurrentDisplayMode(0, &current) != 0)
+    {
+        SDL_Log("Could not get display mode for video display #%d: %s", 0, SDL_GetError());
+    }
+
+    refreshRate = current.refresh_rate;
 }
 
 

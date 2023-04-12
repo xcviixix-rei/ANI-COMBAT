@@ -38,6 +38,8 @@
 		<Unit filename="gameHeader.cpp" />
 		<Unit filename="gameHeader.h" />
 		<Unit filename="mainGame.cpp" />
+		<Unit filename="menu.cpp" />
+		<Unit filename="menu.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="player1.cpp" />

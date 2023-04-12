@@ -1,4 +1,5 @@
 #include "gameHeader.h"
+#include "menu.h"
 #include "background.h"
 #include "player1.h"
 #include "player2.h"
@@ -15,9 +16,33 @@ const string WINDOW_TITLE = "ANI - COMBAT";
 
 int main(int argc, char* argv[])
 {
+    int refreshRate;
     SDL_Window* window;
     SDL_Renderer* renderer;
-    initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE, window, renderer);
+    initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE, window, renderer, refreshRate);
+
+    SDL_Event e;
+
+    bool gameRunning = false;
+    if(!gameRunning){
+        menu menuScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
+        menuScreen.loadMenuIMG(renderer);
+
+        while(menuScreen.menuIsRunning){
+            SDL_Delay(refreshRate / 9);
+            while(SDL_PollEvent(&e))
+            {
+                if(e.type == SDL_QUIT)
+                {
+                    menuScreen.menuIsRunning = false;
+                    return 0;
+                }
+                menuScreen.handleEvent(e);
+            }
+            menuScreen.render(renderer);
+        }
+        gameRunning = true;
+    }
 
     BG background;
     background.loadBG(renderer);
@@ -25,25 +50,13 @@ int main(int argc, char* argv[])
     player1 plr1(background);
     plr1.initplayer1();
     plr1.loadIMG(renderer);
-
     statusBar1 stat1(plr1.healthPoints, renderer);
 
     player2 plr2(background);
     plr2.initplayer2();
     plr2.loadIMG(renderer);
-
     statusBar2 stat2(plr2.healthPoints, renderer);
 
-    SDL_Event e;
-
-    SDL_DisplayMode current;
-    if (SDL_GetCurrentDisplayMode(0, &current) != 0)
-    {
-        SDL_Log("Could not get display mode for video display #%d: %s", 0, SDL_GetError());
-    }
-    int refreshRate = current.refresh_rate;
-
-    bool gameRunning = true;
 
     while(gameRunning)
     {
@@ -53,6 +66,7 @@ int main(int argc, char* argv[])
             if(e.type == SDL_QUIT)
             {
                 gameRunning = false;
+                return 0;
             }
             plr1.handleEvent(e);
             plr2.handleEvent(e);

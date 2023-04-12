@@ -128,6 +128,10 @@ void player1 :: loadIMG(SDL_Renderer* renderer)
     sheetW.push_back(w); sheetH.push_back(h);
     //9
 
+    winner = loadTexture("character/winner.png", renderer);
+    winnerPos.w = 100;
+    winnerPos.h = 22;
+
 /*
     obj1.loadObjectIMG(renderer);
     obj2.loadObjectIMG(renderer);
@@ -170,7 +174,7 @@ void player1 :: handleEvent(SDL_Event &e)
                     }
                     break;
 
-                case SDLK_r:
+                case SDLK_j:
                     if((SDL_GetTicks() - normalAttackTime >= 80) && (charPos.y == jumpCurrentHeight)){
                         charRect.x = 0;
                         charStat = normalAttack;
@@ -182,7 +186,7 @@ void player1 :: handleEvent(SDL_Event &e)
                     }
                     break;
 
-                case SDLK_f:
+                case SDLK_u:
                     if((SDL_GetTicks() - kickTime >= 250) && (charPos.y == jumpCurrentHeight)){
                         charRect.x = 0;
                         charStat = kick;

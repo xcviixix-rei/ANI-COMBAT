@@ -7,7 +7,7 @@ using namespace std;
 
 void logSDLError(ostream& os, const string &msg, bool fatal);
 
-void initSDL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, const string WINDOW_TITLE, SDL_Window* &window, SDL_Renderer* &renderer);
+void initSDL(const int SCREEN_WIDTH, const int SCREEN_HEIGHT, const string WINDOW_TITLE, SDL_Window* &window, SDL_Renderer* &renderer, int &refreshRate);
 
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
 

@@ -40,6 +40,9 @@ class CRT
         SDL_Texture* charTexture;
         vector <SDL_Texture*> charIMG;
 
+        SDL_Texture* winner;
+        SDL_Rect winnerPos;
+
         Mix_Chunk* sfx;
 
         int char_width, char_height;
