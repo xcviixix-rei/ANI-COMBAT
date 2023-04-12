@@ -10,8 +10,6 @@ class player1 : public CRT
     public:
         player1(BG background);
 
-        //player1Object obj1, obj2, obj3;
-
         Uint32 kickTime;
 
         void initplayer1();

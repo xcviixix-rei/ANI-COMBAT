@@ -131,12 +131,6 @@ void player1 :: loadIMG(SDL_Renderer* renderer)
     winner = loadTexture("character/winner.png", renderer);
     winnerPos.w = 100;
     winnerPos.h = 22;
-
-/*
-    obj1.loadObjectIMG(renderer);
-    obj2.loadObjectIMG(renderer);
-    obj3.loadObjectIMG(renderer);
-*/
 }
 void player1 :: handleEvent(SDL_Event &e)
 {
@@ -198,18 +192,6 @@ void player1 :: handleEvent(SDL_Event &e)
                         if(direction == 1) charPos.x -= 30;
                     }
                     break;
-
-    /*            case SDLK_t:
-                    if((SDL_GetTicks() - throwingObjectTime >= 500) && (charPos.y == jumpCurrentHeight)){
-                        charRect.x = 0;
-                        charStat = throwShuriken;
-                        frameTime = SDL_GetTicks();
-                        tmpVelo = veloX;
-                        veloX = 0;
-                        skillCond = true;
-                        throwingObjectCond = true;
-                    }
-                    break; */
             }
         }
 
@@ -412,10 +394,6 @@ void player1 :: loadChar()
             charRect.h = sheetH[9];
         }
     }
-/*    obj1.loadObject();
-    obj2.loadObject();
-    obj3.loadObject();
-*/
 }
 
 void player1 :: renderSkill(SDL_Renderer* renderer)
@@ -468,37 +446,4 @@ void player1 :: renderSkill(SDL_Renderer* renderer)
         }
         kickTime = SDL_GetTicks();
     }
-/*
-    if(charStat == throwShuriken ){
-        if(throwingObjectCond){
-            SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
-            if(SDL_GetTicks() - frameTime >= 20){
-                charRect.x += charRect.w;
-                frameTime = SDL_GetTicks();
-            }
-            if(charRect.x == 4 * charRect.w){
-                if(obj1.objectCond) obj1.initObjectPosition(direction, charPos);
-                if(obj2.objectCond && !obj1.objectCond) obj2.initObjectPosition(direction, charPos);
-                if(obj3.objectCond && !obj2.objectCond) obj3.initObjectPosition(direction, charPos);
-            }
-            if(charRect.x >= sheetW[5]){
-                charRect.x = 0;
-                veloX = tmpVelo;
-                tmpVelo = NULL;
-                skillCond = false;
-                throwingObjectCond = false;
-                charStat = stand;
-            }
-            throwingObjectTime = SDL_GetTicks();
-        }
-    }
-*/
 }
-/*
-void player1 :: renderObject(SDL_Renderer* renderer)
-{
-    obj1.renderObject(renderer);
-    obj2.renderObject(renderer);
-    obj3.renderObject(renderer);
-}
-*/

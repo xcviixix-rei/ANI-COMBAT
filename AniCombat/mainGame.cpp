@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
     SDL_Event e;
 
     bool gameRunning = false;
+
     if(!gameRunning){
         menu menuScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
         menuScreen.loadMenuIMG(renderer);

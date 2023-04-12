@@ -192,18 +192,6 @@ void player2 :: handleEvent(SDL_Event &e)
                         enemyHPDecreased = true;
                     }
                     break;
-
-    /*            case SDLK_o:
-                    if(SDL_GetTicks() - throwingObjectTime >= 500) && (charPos.y == jumpCurrentHeight)){
-                        charRect.x = 0;
-                        charStat = getsugaTenshou;
-                        frameTime = SDL_GetTicks();
-                        tmpVelo = veloX;
-                        veloX = 0;
-                        skillCond = true;
-                        throwingObjectCond = true;
-                    }
-                    break; */
             }
         }
 
@@ -486,28 +474,4 @@ void player2 :: renderSkill(SDL_Renderer* renderer)
         if(direction == 1) charPos.x += 30;
         else if(direction == 2) charPos.x += 20;
     }
-/*
-    if(charStat == getsugaTenshou){
-        if(throwingObjectCond){
-            if(direction == 1) charPos.x -= 20;
-            else if(direction == 2) charPos.x -= 30;
-            SDL_RenderCopy(renderer, charTexture, &charRect, &charPos);
-            if(SDL_GetTicks() - frameTime >= 40){
-                charRect.x += charRect.w;
-                frameTime = SDL_GetTicks();
-            }
-            if(charRect.x >= sheetW[5]){
-                charRect.x = 0;
-                veloX = tmpVelo;
-                tmpVelo = NULL;
-                skillCond = false;
-                throwingObjectCond = false;
-                charStat = stand;
-            }
-            throwingObjectTime = SDL_GetTicks();
-            if(direction == 1) charPos.x += 20;
-            else if(direction == 2) charPos.x += 30;
-        }
-    }
-*/
 }

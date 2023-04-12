@@ -44,8 +44,6 @@
 		<Unit filename="player.h" />
 		<Unit filename="player1.cpp" />
 		<Unit filename="player1.h" />
-		<Unit filename="player1Object.cpp" />
-		<Unit filename="player1Object.h" />
 		<Unit filename="player2.cpp" />
 		<Unit filename="player2.h" />
 		<Unit filename="statusBar1.cpp" />
