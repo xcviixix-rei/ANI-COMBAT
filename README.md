@@ -78,7 +78,7 @@
 ---
 
 # HƯỚNG DẪN CÀI DẶT:
-## **CÁC BẠN CÓ THỂ TẢI FILE** [ANI-COMBAT.demo.zip](https://github.com/xcviixix-rei/ANI-COMBAT/releases/download/v1.0.0-demo/ANI-COMBAT.demo.zip) **TẠI ĐÂY HOẶC LÀM THEO CÁC BƯỚC SAU:**
+## **CÁC BẠN CÓ THỂ TẢI FILE** [ANI-COMBAT.demo.zip](https://github.com/xcviixix-rei/ANI-COMBAT/releases/download/v1.0.0-demo/game.zip) **TẠI ĐÂY HOẶC LÀM THEO CÁC BƯỚC SAU:**
   - Truy cập phần release trong repository ANI-COMBAT:
     <p align="center">
       <img src="https://i.ibb.co/0Mqs7Gh/Screenshot-89.png" width="600" height="450"/>
