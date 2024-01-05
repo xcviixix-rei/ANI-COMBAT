@@ -71,7 +71,7 @@
   ## CHÚ Ý
   - Kẻ địch bị đánh trúng nếu bạn đang tấn công và chạm được vào chúng
   - Trong lúc sử dụng chiêu không thể di chuyển hay dùng chiêu khác
-  - Trong lúc chịu sát thương không thể thực hiện bất kỳ thao tác nào (từ 0,2s đến 0,5s mỗi lần nhận sát thươngthương)
+  - Trong lúc chịu sát thương không thể thực hiện bất kỳ thao tác nào (từ 0,2s đến 0,5s mỗi lần nhận sát thương)
   - Trong lúc nhảy không thể dùng chiêu hay đánh thường, nếu bị địch đánh trúng sẽ rơi xuống
   - Hãy tận dụng những bục đá và nhảy lên chúng để rút lui hay truy sát địch
   
